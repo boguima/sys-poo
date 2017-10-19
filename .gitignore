@@ -5,3 +5,7 @@
 \.recommenders/caches/
 
 ControleHospedagem/\.idea/
+
+*.class
+
+ControleHospedagem/RemoteSystemsTempFiles/\.project

@@ -1,15 +1,15 @@
-package br.com.poo.ConexaoBanco;
+package br.com.poo.Util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConexaoMySQL {
+public class ConexaoMySQLRemover {
 	public static String status = "Não conectou...";
 
 	// Método Construtor da Classe//
 
-	public ConexaoMySQL() {
+	public ConexaoMySQLRemover() {
 
 	}
 
@@ -87,7 +87,7 @@ public class ConexaoMySQL {
 
 		try {
 
-			ConexaoMySQL.getConexaoMySQL().close();
+			ConexaoMySQLRemover.getConexaoMySQL().close();
 
 			return true;
 
@@ -105,7 +105,7 @@ public class ConexaoMySQL {
 
 		FecharConexao();
 
-		return ConexaoMySQL.getConexaoMySQL();
+		return ConexaoMySQLRemover.getConexaoMySQL();
 
 	}
 

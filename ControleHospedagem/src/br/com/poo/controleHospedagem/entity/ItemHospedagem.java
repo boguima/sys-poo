@@ -12,7 +12,7 @@ import lombok.ToString;
 public class ItemHospedagem {
 	@Getter
 	@Setter
-	private int iditem;
+	private int id;
 	@Getter
 	@Setter
 	private String produto;

@@ -31,7 +31,7 @@ public class ItemHospedagenRepository {
 			stmt.setString(++i, itemHospedagen.getProduto());
 			stmt.setLong(++i, itemHospedagen.getQtd());
 			stmt.setBigDecimal(i++, itemHospedagen.getValorUnit());
-			stmt.setLong(++i, itemHospedagen.getHospedagem().getIdhosp());						
+			stmt.setLong(++i, itemHospedagen.getHospedagem().getId());						
 			stmt.executeUpdate();
 			
 		} catch (SQLException e) {

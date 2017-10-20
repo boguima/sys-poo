@@ -12,7 +12,7 @@ import lombok.ToString;
 public class Hospedagens {
 	@Getter
 	@Setter
-	private int idhosp;
+	private int id;
 	@Getter
 	@Setter
 	private int numQuarto;

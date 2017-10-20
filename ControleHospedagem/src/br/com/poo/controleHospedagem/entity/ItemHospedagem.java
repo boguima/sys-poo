@@ -7,16 +7,22 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode @ToString
+@EqualsAndHashCode
+@ToString
 public class ItemHospedagem {
-	@Getter @Setter
+	@Getter
+	@Setter
 	private int iditem;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private String produto;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private int qtd;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private BigDecimal valorUnit;
-	@Getter @Setter
-	private Hospedagens hospedagem; 
+	@Getter
+	@Setter
+	private Hospedagens hospedagem;
 }

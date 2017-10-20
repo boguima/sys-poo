@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import br.com.poo.controleHospedagem.entity.Hospedagens;
+import br.com.poo.controleHospedagem.entity.ItemHospedagem;
 import br.com.poo.controleHospedagem.util.ConnectionRepository;
 import br.com.poo.controleHospedagem.util.RepositoryException;
 
@@ -21,18 +22,16 @@ public class ItemHospedagenRepository {
 		connection = new ConnectionRepository();		
 	}
 
-	public void inserir(Hospedagens hospedagen) throws RepositoryException {
+	public void inserir(ItemHospedagem itemHospedagen) throws RepositoryException {
 		try {
 			int i=0;
 			conn = connection.getConnection();
-			stmt = conn.prepareStatement("insert int hospedagens (hosp_nmquarto, hosp_dtentrada, hosp_dtsaida, hosp_stcheckout, hosp_idcliente, hosp_observacao) values ( ? , ? , ? , ? , ? , ? )"
+			stmt = conn.prepareStatement("insert int item_hospedagens (itemhosp_dsproduto, itemhosp_qtdproduto, itemhosp_vldproduto, itemhosp_idhosp) values ( ? , ? , ? , ? , ? , ? )"
 					, PreparedStatement.RETURN_GENERATED_KEYS);					
-			stmt.setInt(++i, hospedagen.getNumQuarto());
-			stmt.setDate(++i, (Date) hospedagen.getDataEntrada());
-			stmt.setDate(++i, (Date) hospedagen.getDataSaida());
-			stmt.setString(++i, hospedagen.getStCheckout());
-			stmt.setLong(++i, hospedagen.getCliente().getId());
-			stmt.setString(++i, hospedagen.getObservacao());			
+			stmt.setString(++i, itemHospedagen.getProduto());
+			stmt.setLong(++i, itemHospedagen.getQtd());
+			stmt.setBigDecimal(i++, itemHospedagen.getValorUnit());
+			stmt.setLong(++i, itemHospedagen.getHospedagem().getIdhosp());						
 			stmt.executeUpdate();
 			
 		} catch (SQLException e) {

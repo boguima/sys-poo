@@ -1,4 +1,4 @@
-package br.com.poo.Util.Repository;
+package br.com.poo.controleHospedagem.util;
 
 public class RepositoryException extends Exception{
 

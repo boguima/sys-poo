@@ -1,4 +1,4 @@
-package br.com.poo.Util.Repository;
+package br.com.poo.controleHospedagem.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -51,12 +51,22 @@ public class ConnectionRepository {
 		
 	}
 	
+	/**
+	 * Finaliza conexão transacional.
+	 * @throws SQLException
+	 */
 	public void endTransaction() throws SQLException {
 		commit ( getConnectionFromContext() );
+		releaseTransaction();
 	}
 	
-	public void commit(Connection conn) throws SQLException{
-		
+	public void releaseTransaction() throws SQLException {
+		Connection conn = getConnectionFromContext();
+		relrase(conn);
+		context.remove();
+	}
+	
+	public void commit(Connection conn) throws SQLException{		
 		conn.commit();
 	}
 	

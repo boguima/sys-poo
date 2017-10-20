@@ -1,14 +1,15 @@
 package br.com.poo.controleHospedagem.entity.Repository;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import br.com.poo.controleHospedagem.entity.Cliente;
+import br.com.poo.controleHospedagem.entity.Hospedagens;
 import br.com.poo.controleHospedagem.util.ConnectionRepository;
 import br.com.poo.controleHospedagem.util.RepositoryException;
 
-public class ClienteRepository {
+public class HospedagensRepository {
 
 	private ConnectionRepository connection;
 	
@@ -16,22 +17,22 @@ public class ClienteRepository {
 	
 	private PreparedStatement stmt;
 	
-	public ClienteRepository () {
+	public HospedagensRepository () {
 		connection = new ConnectionRepository();		
 	}
 
-	public void inserir(Cliente cliente) throws RepositoryException {
+	public void inserir(Hospedagens hospedagen) throws RepositoryException {
 		try {
 			int i=0;
 			conn = connection.getConnection();
-			stmt = conn.prepareStatement("insert int cliente (cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email) values ( ? , ? , ? , ? , ? , ? )"
+			stmt = conn.prepareStatement("insert int hospedagens (hosp_nmquarto, hosp_dtentrada, hosp_dtsaida, hosp_stcheckout, hosp_idcliente, hosp_observacao) values ( ? , ? , ? , ? , ? , ? )"
 					, PreparedStatement.RETURN_GENERATED_KEYS);					
-			stmt.setString(++i, cliente.getNomeCliente());
-			stmt.setString(++i, cliente.getEndereco());
-			stmt.setString(++i, cliente.getUf());
-			stmt.setString(++i, cliente.getTelefone());
-			stmt.setString(++i, cliente.getCpf() );
-			stmt.setString(++i, cliente.getEMail());			
+			stmt.setInt(++i, hospedagen.getNumQuarto());
+			stmt.setDate(++i, (Date) hospedagen.getDataEntrada());
+			stmt.setDate(++i, (Date) hospedagen.getDataSaida());
+			stmt.setString(++i, hospedagen.getStCheckout());
+			stmt.setLong(++i, hospedagen.getCliente().getId());
+			stmt.setString(++i, hospedagen.getObservacao());			
 			stmt.executeUpdate();
 			
 		} catch (SQLException e) {

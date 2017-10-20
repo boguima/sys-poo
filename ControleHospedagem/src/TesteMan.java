@@ -1,6 +1,6 @@
-import br.com.poo.Util.Repository.RepositoryException;
 import br.com.poo.controleHospedagem.entity.Cliente;
 import br.com.poo.controleHospedagem.entity.Repository.ClienteRepository;
+import br.com.poo.controleHospedagem.util.RepositoryException;
 
 public class TesteMan {
 

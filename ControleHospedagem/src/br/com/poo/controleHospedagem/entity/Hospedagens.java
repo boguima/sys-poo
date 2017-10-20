@@ -7,20 +7,28 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode @ToString
-public class Hospedagem {
-	@Getter @Setter
+@EqualsAndHashCode
+@ToString
+public class Hospedagens {
+	@Getter
+	@Setter
 	private int idhosp;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private int numQuarto;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private Date dataEntrada;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private Date dataSaida;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private Cliente cliente;
-	@Getter @Setter
-	private char checkout;
-	@Getter @Setter
+	@Getter
+	@Setter
+	private String stCheckout;
+	@Getter
+	@Setter
 	private String observacao;
 }

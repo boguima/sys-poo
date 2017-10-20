@@ -18,5 +18,5 @@ public class ItemHospedagem {
 	@Getter @Setter
 	private BigDecimal valorUnit;
 	@Getter @Setter
-	private Hospedagem idhosp; 
+	private Hospedagens hospedagem; 
 }

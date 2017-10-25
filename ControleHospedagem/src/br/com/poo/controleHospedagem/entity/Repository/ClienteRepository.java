@@ -22,23 +22,34 @@ public class ClienteRepository {
 
 	public void inserir(Cliente cliente) throws RepositoryException {
 		try {
-			int i=0;
-			conn = connection.getConnection();
-			stmt = conn.prepareStatement("insert int cliente (cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email) values ( ? , ? , ? , ? , ? , ? )"
-					, PreparedStatement.RETURN_GENERATED_KEYS);					
-			stmt.setString(++i, cliente.getNomeCliente());
-			stmt.setString(++i, cliente.getEndereco());
-			stmt.setString(++i, cliente.getUf());
-			stmt.setString(++i, cliente.getTelefone());
-			stmt.setString(++i, cliente.getCpf() );
-			stmt.setString(++i, cliente.getEMail());			
-			stmt.executeUpdate();
+			if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+				connection.beginTransaction();
+			}			
 			
+			inserir(cliente, this.connection);
+			
+			connection.endTransaction();			
 		} catch (SQLException e) {
 			throw new RepositoryException("Não foi possivel realizar a transação", e);
 		} finally {
 			connection.releaseAll(stmt, conn);
 		}
+	}
+
+	public void inserir(Cliente cliente, ConnectionRepository connection) throws SQLException {
+		int i=0;
+		
+		this.conn = connection.getConnectionFromContext();
+		
+		stmt = conn.prepareStatement("insert into cliente (cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email) values ( ? , ? , ? , ? , ? , ? )"
+				, PreparedStatement.RETURN_GENERATED_KEYS);					
+		stmt.setString(++i, cliente.getNomeCliente());
+		stmt.setString(++i, cliente.getEndereco());
+		stmt.setString(++i, cliente.getUf());
+		stmt.setString(++i, cliente.getTelefone());
+		stmt.setString(++i, cliente.getCpf() );
+		stmt.setString(++i, cliente.getEMail());			
+		stmt.executeUpdate();
 	}
 
 }

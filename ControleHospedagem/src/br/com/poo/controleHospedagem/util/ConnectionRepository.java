@@ -121,4 +121,8 @@ public class ConnectionRepository {
 		release(rset);
 		releaseAll(stmt, conn);
 	}
+	
+	public Connection getConnectionContext() throws SQLException {			
+		return context.get();		
+	}
 }

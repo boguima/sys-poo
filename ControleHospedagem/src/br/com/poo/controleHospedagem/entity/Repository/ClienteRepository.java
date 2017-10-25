@@ -30,7 +30,7 @@ public class ClienteRepository {
 			
 			connection.endTransaction();			
 		} catch (SQLException e) {
-			throw new RepositoryException("Não foi possivel realizar a transação", e);
+			throw new RepositoryException("Nï¿½o foi possivel realizar a transaï¿½ï¿½o", e);
 		} finally {
 			connection.releaseAll(stmt, conn);
 		}

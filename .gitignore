@@ -11,3 +11,8 @@ ControleHospedagem/\.idea/
 ControleHospedagem/RemoteSystemsTempFiles/\.project
 
 \.project
+/ControleHospedagem/nbproject/private/
+/ControleHospedagem/build/
+ControleHospedagem/nbproject/
+
+*.xml

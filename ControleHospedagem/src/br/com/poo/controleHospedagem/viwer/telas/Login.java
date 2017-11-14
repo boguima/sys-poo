@@ -5,6 +5,8 @@
  */
 package br.com.poo.controleHospedagem.viwer.telas;
 
+import br.com.poo.controleHospedagem.entity.Usuario;
+import br.com.poo.controleHospedagem.service.LoginService;
 import java.awt.event.KeyEvent;
 
 /**
@@ -153,7 +155,14 @@ public class Login extends javax.swing.JDialog {
 
     private void btEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEnterActionPerformed
         // TODO add your handling code here:
-         if(login.getText().equals(log)&&senha.getText().equals(num)){
+        Usuario usuarioLogado = null;
+        try {
+        usuarioLogado = (new LoginService()).findOneLogin(login.getText());
+        
+        } catch (Exception e) {
+        }
+
+        if(usuarioLogado!=null && login.getText().equals(usuarioLogado.getUsuario())&&senha.getText().equals(usuarioLogado.getSenha())){
           
           this.dispose();
           login.setText("");

@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
  * @author Lucas
  */
 public class Login extends javax.swing.JDialog {
-    private String log = "lucas";
+    private String log = "bruno";
     private String num = "1234";
     
 

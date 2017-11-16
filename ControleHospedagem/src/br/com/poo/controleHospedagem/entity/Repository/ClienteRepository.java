@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import br.com.poo.controleHospedagem.entity.Cliente;
+import br.com.poo.controleHospedagem.entity.Usuario;
 import br.com.poo.controleHospedagem.util.ConnectionRepository;
 import br.com.poo.controleHospedagem.util.RepositoryException;
+import java.sql.ResultSet;
 
 public class ClienteRepository {
 
@@ -51,5 +53,41 @@ public class ClienteRepository {
 		stmt.setString(++i, cliente.getEMail());			
 		stmt.executeUpdate();
 	}
+        
+        public Cliente findOne(Long codigo) throws RepositoryException{
+            Cliente entity = null;
+            try {
+                if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+		    connection.beginTransaction();
+                }        
+		
+		this.conn = connection.getConnectionFromContext();
+		//TODO Altera INSERT
+		stmt = conn.prepareStatement("select cli_id, cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email from cliente where cli_id = "+codigo.toString());	
+			
+		
+                
+                ResultSet rs =  stmt.executeQuery();
+                
+                while (rs.next()) {                    
+                    entity = new Cliente(rs.getLong("cli_id")
+                            , rs.getString("cli_nome")
+                            , rs.getString("cli_endereco")
+                            , rs.getString("cli_uf")
+                            , rs.getString("cli_telefone")
+                            , rs.getString("cli_cpf")
+                            , rs.getString("cli_email"));
+                }
+                
+                connection.endTransaction();
+              
+                
+            } catch (SQLException e) {
+                throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+            } finally {
+			connection.releaseAll(stmt, conn);
+		}
+            return entity;        
+        }
 
 }

@@ -105,7 +105,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        btCadastrar.setText("Cadastrar");
+        btCadastrar.setText("Cadastrar/Editar");
         btCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCadastrarActionPerformed(evt);
@@ -239,7 +239,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        btConsultar.setText("Consultar");
+        btConsultar.setText("Listar Clientes");
         btConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btConsultarActionPerformed(evt);
@@ -315,21 +315,47 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cpfActionPerformed
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
-        // TODO Metodo Para Cadastrar CLiente
-    	if (nome.getText().equals("") || endereco.getText().equals("") || ((String) uf.getSelectedItem()).equals("") || telefone.getText().equals("") || cpf.getText().equals("") && email.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção",  JOptionPane.ERROR_MESSAGE);
-            codigoClienteLoc.setEnabled(false);
-            codigoClienteLoc.setText("");
-            btLocalizar.setEnabled(false);
-        } else {
+        // TODO Metodo Para Cadastrar e Atualizar CLiente
+        try{
+        if (codigo.getText().equals("")) {
+            try{
+            if (validaCamposObrigatorios()) {
+                JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção",  JOptionPane.ERROR_MESSAGE);
+                codigoClienteLoc.setEnabled(false);
+                codigoClienteLoc.setText("");
+                btLocalizar.setEnabled(false);
+            } else {
             Cliente cliente = new Cliente(null, nome.getText(), endereco.getText(), (String) uf.getSelectedItem(), telefone.getText(), cpf.getText(), email.getText());
     	
             (new ClienteServiceImpl()).novoCliente(cliente);
+            }
+            } catch (Exception e) {
+                 JOptionPane.showMessageDialog(null,"Houve um erro no Cadastro","Cadastro",JOptionPane.ERROR_MESSAGE);
+             }
+        } else {
+            try{
+            if (validaCamposObrigatorios()) {
+                JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção",  JOptionPane.ERROR_MESSAGE);
+                codigoClienteLoc.setEnabled(false);
+                codigoClienteLoc.setText("");
+                btLocalizar.setEnabled(false);
+            } else {
+            (new ClienteServiceImpl()).update(new Cliente(Long.parseLong(codigo.getText()), nome.getText(), endereco.getText(), (String) uf.getSelectedItem(), telefone.getText(), cpf.getText(), email.getText()));            
+            }            
+            //JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);                
+             } catch (Exception e) {
+                 JOptionPane.showMessageDialog(null,"Houve um erro na alteração","Alteração",JOptionPane.ERROR_MESSAGE);
+             }
         }
-
-
-     
+        JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","OK",JOptionPane.INFORMATION_MESSAGE);   
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Houve um erro","Atenção",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btCadastrarActionPerformed
+
+    private boolean validaCamposObrigatorios() {
+        return nome.getText().equals("") || endereco.getText().equals("") || ((String) uf.getSelectedItem()).equals("") || telefone.getText().equals("") || cpf.getText().equals("") && email.getText().equals("");
+    }
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
         // TODO add your handling code here:
@@ -345,8 +371,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                 cpf.setText(cliente.getCpf());
                 endereco.setText(cliente.getEndereco());
                 telefone.setText(cliente.getTelefone());
-                btExcluir.setEnabled(true);
-                btCadastrar.setEnabled(false);
+                btExcluir.setEnabled(true);                
             } else {
             codigoClienteLoc.setText("");
             JOptionPane.showMessageDialog(null, "Cliente não localizado", "Atenção",  JOptionPane.ERROR_MESSAGE);
@@ -358,11 +383,16 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btLocalizarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        // TODO add your handling code here:
+        ListaClientes form = new ListaClientes();
+        form.setVisible(true);
     }//GEN-LAST:event_btConsultarActionPerformed
 
     private void btRecarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRecarregarActionPerformed
         
+        refreshScreen();
+    }//GEN-LAST:event_btRecarregarActionPerformed
+
+    private void refreshScreen() {
         codigoClienteLoc.setText("");
         codigo.setText("");
         nome.setText("");
@@ -375,7 +405,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         btExcluir.setEnabled(false);
         btCadastrar.setEnabled(true);
         codigoClienteLoc.setEnabled(true);
-    }//GEN-LAST:event_btRecarregarActionPerformed
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -9,6 +9,8 @@ import br.com.poo.controleHospedagem.entity.Usuario;
 import br.com.poo.controleHospedagem.util.ConnectionRepository;
 import br.com.poo.controleHospedagem.util.RepositoryException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteRepository {
 
@@ -17,6 +19,10 @@ public class ClienteRepository {
 	private Connection conn;
 	
 	private PreparedStatement stmt;
+        
+        private static final String INSERT = "insert into cliente (cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email) values ( ? , ? , ? , ? , ? , ? )";
+        
+        private static final String UPDATE = "update cliente SET cli_nome = ?, cli_endereco = ?, cli_uf = ?, cli_telefone = ?, cli_cpf = ?, cli_email = ? where cli_id = ?";
 	
 	public ClienteRepository () {
 		connection = new ConnectionRepository();		
@@ -28,7 +34,7 @@ public class ClienteRepository {
 				connection.beginTransaction();
 			}			
 			
-			inserir(cliente, this.connection);
+			inserir(cliente, INSERT, "insert", this.connection);
 			
 			connection.endTransaction();			
 		} catch (SQLException e) {
@@ -38,19 +44,22 @@ public class ClienteRepository {
 		}
 	}
 
-	public void inserir(Cliente cliente, ConnectionRepository connection) throws SQLException {
+	public void inserir(Cliente cliente, String sql, String op,ConnectionRepository connection) throws SQLException {
 		int i=0;
 		
 		this.conn = connection.getConnectionFromContext();
 		
-		stmt = conn.prepareStatement("insert into cliente (cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email) values ( ? , ? , ? , ? , ? , ? )"
+		stmt = conn.prepareStatement(sql
 				, PreparedStatement.RETURN_GENERATED_KEYS);					
 		stmt.setString(++i, cliente.getNomeCliente());
 		stmt.setString(++i, cliente.getEndereco());
 		stmt.setString(++i, cliente.getUf());
 		stmt.setString(++i, cliente.getTelefone());
 		stmt.setString(++i, cliente.getCpf() );
-		stmt.setString(++i, cliente.getEMail());			
+		stmt.setString(++i, cliente.getEMail());
+                if ("update".equals(op)) {
+                stmt.setLong(++i, cliente.getId());
+            }
 		stmt.executeUpdate();
 	}
         
@@ -89,5 +98,58 @@ public class ClienteRepository {
 		}
             return entity;        
         }
+        
+        public List<Cliente> findAll( )throws RepositoryException{
+            List<Cliente> listEntity = new ArrayList<>();
+            try {
+                if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+		    connection.beginTransaction();
+                }        
+		
+		this.conn = connection.getConnectionFromContext();
+		
+		stmt = conn.prepareStatement("select cli_id, cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email from cliente");	
+			
+		
+                
+                ResultSet rs =  stmt.executeQuery();
+                                
+                while (rs.next()) {                    
+                    listEntity.add(new Cliente(rs.getLong("cli_id")
+                            , rs.getString("cli_nome")
+                            , rs.getString("cli_endereco")
+                            , rs.getString("cli_uf")
+                            , rs.getString("cli_telefone")
+                            , rs.getString("cli_cpf")
+                            , rs.getString("cli_email")));
+                }
+                
+                connection.endTransaction();
+              
+                
+            } catch (SQLException e) {
+                throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+            } finally {
+			connection.releaseAll(stmt, conn);
+		}
+            return listEntity; 
+        }
+        
+        
+        	public void update(Cliente cliente) throws RepositoryException {
+		try {
+			if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+				connection.beginTransaction();
+			}			
+			
+			inserir(cliente, UPDATE, "update", this.connection);
+			
+			connection.endTransaction();			
+		} catch (SQLException e) {
+			throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+		} finally {
+			connection.releaseAll(stmt, conn);
+		}
+	}
 
 }

@@ -65,13 +65,6 @@
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="cpf" min="-2" pref="105" max="-2" attributes="0"/>
-                                              <Group type="102" attributes="0">
-                                                  <Component id="btExcluir" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                                                  <Component id="btConsultar" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                                                  <Component id="btCadastrar" min="-2" max="-2" attributes="0"/>
-                                              </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="telefone" min="-2" pref="105" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
@@ -81,13 +74,18 @@
                                               </Group>
                                               <Component id="email" alignment="0" min="-2" pref="327" max="-2" attributes="0"/>
                                               <Component id="nome" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="btExcluir" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                                                  <Component id="btCadastrar" min="-2" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -150,7 +148,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btCadastrar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btConsultar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -255,14 +252,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btExcluirActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btConsultar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Consultar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btConsultarActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="btCadastrar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cadastrar"/>
@@ -316,8 +305,15 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="codigoClienteLoc" min="-2" pref="114" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                  <Component id="localizar" min="-2" max="-2" attributes="0"/>
+                  <Component id="btLocalizar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="252" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="btConsultar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btRecarregar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -328,9 +324,14 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="codigoClienteLoc" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="localizar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btLocalizar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="50" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btRecarregar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btConsultar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -346,12 +347,31 @@
             <Property name="toolTipText" type="java.lang.String" value="Digite o C&#xf3;digo"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="localizar">
+        <Component class="javax.swing.JButton" name="btLocalizar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Localizar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="localizarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btLocalizarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btRecarregar">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/arrow_refresh.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Recarregar Tela"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btRecarregarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btConsultar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Consultar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btConsultarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

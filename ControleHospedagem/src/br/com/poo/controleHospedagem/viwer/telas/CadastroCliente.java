@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import br.com.poo.controleHospedagem.entity.Cliente;
 import br.com.poo.controleHospedagem.service.ClienteServiceImpl;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,7 +47,6 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         uf = new javax.swing.JComboBox<>();
         btExcluir = new javax.swing.JButton();
-        btConsultar = new javax.swing.JButton();
         btCadastrar = new javax.swing.JButton();
         cpf = new javax.swing.JFormattedTextField();
         telefone = new javax.swing.JFormattedTextField();
@@ -55,7 +55,9 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         codigoClienteLoc = new javax.swing.JTextField();
-        localizar = new javax.swing.JButton();
+        btLocalizar = new javax.swing.JButton();
+        btRecarregar = new javax.swing.JButton();
+        btConsultar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Cadastro de Cliente");
@@ -100,13 +102,6 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         btExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btExcluirActionPerformed(evt);
-            }
-        });
-
-        btConsultar.setText("Consultar");
-        btConsultar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btConsultarActionPerformed(evt);
             }
         });
 
@@ -159,21 +154,19 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(btExcluir)
-                                                .addGap(57, 57, 57)
-                                                .addComponent(btConsultar)
-                                                .addGap(68, 68, 68)
-                                                .addComponent(btCadastrar))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(173, 173, 173)
                                                 .addComponent(jLabel8)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(uf, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(btExcluir)
+                                                .addGap(53, 53, 53)
+                                                .addComponent(btCadastrar)))
                                         .addGap(0, 0, Short.MAX_VALUE)))))
-                        .addGap(91, 91, 91))
+                        .addGap(71, 71, 71))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -221,8 +214,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                 .addGap(64, 64, 64)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btExcluir)
-                    .addComponent(btCadastrar)
-                    .addComponent(btConsultar))
+                    .addComponent(btCadastrar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -232,10 +224,25 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
 
         codigoClienteLoc.setToolTipText("Digite o Código");
 
-        localizar.setText("Localizar");
-        localizar.addActionListener(new java.awt.event.ActionListener() {
+        btLocalizar.setText("Localizar");
+        btLocalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                localizarActionPerformed(evt);
+                btLocalizarActionPerformed(evt);
+            }
+        });
+
+        btRecarregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/arrow_refresh.png"))); // NOI18N
+        btRecarregar.setText("Recarregar Tela");
+        btRecarregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRecarregarActionPerformed(evt);
+            }
+        });
+
+        btConsultar.setText("Consultar");
+        btConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConsultarActionPerformed(evt);
             }
         });
 
@@ -249,8 +256,14 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(codigoClienteLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
-                .addComponent(localizar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btLocalizar)
+                .addContainerGap(252, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btConsultar)
+                .addGap(18, 18, 18)
+                .addComponent(btRecarregar)
+                .addGap(23, 23, 23))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,8 +272,12 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(codigoClienteLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(localizar))
-                .addContainerGap(50, Short.MAX_VALUE))
+                    .addComponent(btLocalizar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btRecarregar)
+                    .addComponent(btConsultar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -299,10 +316,17 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         // TODO Metodo Para Cadastrar CLiente
+    	if (nome.getText().equals("") || endereco.getText().equals("") || ((String) uf.getSelectedItem()).equals("") || telefone.getText().equals("") || cpf.getText().equals("") && email.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção",  JOptionPane.ERROR_MESSAGE);
+            codigoClienteLoc.setEnabled(false);
+            codigoClienteLoc.setText("");
+            btLocalizar.setEnabled(false);
+        } else {
+            Cliente cliente = new Cliente(null, nome.getText(), endereco.getText(), (String) uf.getSelectedItem(), telefone.getText(), cpf.getText(), email.getText());
     	
-    	Cliente cliente = new Cliente(null, nome.getText(), endereco.getText(), (String) uf.getSelectedItem(), telefone.getText(), cpf.getText(), email.getText());
-    	
-    	(new ClienteServiceImpl()).novoCliente(cliente);
+            (new ClienteServiceImpl()).novoCliente(cliente);
+        }
+
 
      
     }//GEN-LAST:event_btCadastrarActionPerformed
@@ -311,29 +335,55 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_emailActionPerformed
 
-    private void localizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localizarActionPerformed
+    private void btLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocalizarActionPerformed
+        if (!codigoClienteLoc.getText().equals("")) {
         Cliente cliente = (new ClienteServiceImpl()).findOne(Long.parseLong(codigoClienteLoc.getText()));
-        if (cliente != null) {
-        codigo.setText(cliente.getId().toString());
-        nome.setText(cliente.getNomeCliente());
-        email.setText(cliente.getEMail());
-        cpf.setText(cliente.getCpf());
-        endereco.setText(cliente.getEndereco());
-        telefone.setText(cliente.getTelefone());
-        btExcluir.setEnabled(true);
+            if (cliente != null) {
+                codigo.setText(cliente.getId().toString());
+                nome.setText(cliente.getNomeCliente());
+                email.setText(cliente.getEMail());
+                cpf.setText(cliente.getCpf());
+                endereco.setText(cliente.getEndereco());
+                telefone.setText(cliente.getTelefone());
+                btExcluir.setEnabled(true);
+                btCadastrar.setEnabled(false);
+            } else {
+            codigoClienteLoc.setText("");
+            JOptionPane.showMessageDialog(null, "Cliente não localizado", "Atenção",  JOptionPane.ERROR_MESSAGE);
+            }            
         } else {
+            JOptionPane.showMessageDialog(null, "Informar Código do Cliente", "Atenção",  JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_localizarActionPerformed
+
+    }//GEN-LAST:event_btLocalizarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btConsultarActionPerformed
+
+    private void btRecarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRecarregarActionPerformed
+        
+        codigoClienteLoc.setText("");
+        codigo.setText("");
+        nome.setText("");
+        email.setText("");
+        cpf.setText("");
+        endereco.setText("");
+        telefone.setText("");
+        
+        btLocalizar.setEnabled(true);
+        btExcluir.setEnabled(false);
+        btCadastrar.setEnabled(true);
+        codigoClienteLoc.setEnabled(true);
+    }//GEN-LAST:event_btRecarregarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastrar;
     private javax.swing.JButton btConsultar;
     private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btLocalizar;
+    private javax.swing.JButton btRecarregar;
     private javax.swing.JTextField codigo;
     private javax.swing.JTextField codigoClienteLoc;
     private javax.swing.JFormattedTextField cpf;
@@ -350,7 +400,6 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton localizar;
     private javax.swing.JTextField nome;
     private javax.swing.JFormattedTextField telefone;
     private javax.swing.JComboBox<String> uf;

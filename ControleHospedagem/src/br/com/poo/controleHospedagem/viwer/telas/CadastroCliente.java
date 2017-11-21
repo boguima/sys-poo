@@ -104,6 +104,11 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         });
 
         btConsultar.setText("Consultar");
+        btConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConsultarActionPerformed(evt);
+            }
+        });
 
         btCadastrar.setText("Cadastrar");
         btCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -308,6 +313,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
 
     private void localizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localizarActionPerformed
         Cliente cliente = (new ClienteServiceImpl()).findOne(Long.parseLong(codigoClienteLoc.getText()));
+        if (cliente != null) {
         codigo.setText(cliente.getId().toString());
         nome.setText(cliente.getNomeCliente());
         email.setText(cliente.getEMail());
@@ -315,7 +321,13 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         endereco.setText(cliente.getEndereco());
         telefone.setText(cliente.getTelefone());
         btExcluir.setEnabled(true);
+        } else {
+        }
     }//GEN-LAST:event_localizarActionPerformed
+
+    private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btConsultarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

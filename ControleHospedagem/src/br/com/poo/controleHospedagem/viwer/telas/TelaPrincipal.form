@@ -7,7 +7,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/icons/icons 1/group.png"/>
+              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/group.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cliente"/>
           </Properties>
@@ -25,7 +25,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/icons/icons 1/house.png"/>
+              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/house.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Hospedagem"/>
           </Properties>
@@ -53,7 +53,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu4">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/icons/icons 1/table.png"/>
+              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/table.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Itens"/>
           </Properties>
@@ -71,7 +71,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/icons/icons 1/user.png"/>
+              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/user.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Usu&#xe1;rio"/>
           </Properties>

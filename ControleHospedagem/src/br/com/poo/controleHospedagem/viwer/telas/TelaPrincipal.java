@@ -66,7 +66,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGap(0, 382, Short.MAX_VALUE)
         );
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/icons/icons 1/group.png"))); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/group.png"))); // NOI18N
         jMenu1.setText("Cliente");
 
         jMenuItem1.setText("Cadastro");
@@ -79,7 +79,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/icons/icons 1/house.png"))); // NOI18N
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/house.png"))); // NOI18N
         jMenu3.setText("Hospedagem");
 
         jMenuItem3.setText("Cadastro");
@@ -98,7 +98,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/icons/icons 1/table.png"))); // NOI18N
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/table.png"))); // NOI18N
         jMenu4.setText("Itens");
 
         jMenuItem5.setText("Cadastro");
@@ -111,7 +111,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/icons/icons 1/user.png"))); // NOI18N
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/user.png"))); // NOI18N
         jMenu2.setText("Usuário");
 
         jMenuItem2.setText("Cadastro");

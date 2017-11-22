@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import br.com.poo.controleHospedagem.entity.Cliente;
 import br.com.poo.controleHospedagem.service.ClienteServiceImpl;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 /**
@@ -307,7 +308,18 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ufActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        // TODO add your handling code here:
+        // TODO Remove Cliente
+try {
+            if (!"".equals(codigo.getText())) {
+                (new ClienteServiceImpl()).deleteCliente(Long.parseLong(codigo.getText()));
+                JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK", JOptionPane.INFORMATION_MESSAGE); 
+                refreshScreen();
+            } else {
+                JOptionPane.showMessageDialog(null, "Obrigatório localizar cliente","Remoção",  JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Houve um erro ao remover o cliente","Remoção",  JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void cpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpfActionPerformed
@@ -347,7 +359,8 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                  JOptionPane.showMessageDialog(null,"Houve um erro na alteração","Alteração",JOptionPane.ERROR_MESSAGE);
              }
         }
-        JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","OK",JOptionPane.INFORMATION_MESSAGE);   
+        JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","OK",JOptionPane.INFORMATION_MESSAGE); 
+        refreshScreen();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Houve um erro","Atenção",JOptionPane.ERROR_MESSAGE);
         }
@@ -388,8 +401,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btConsultarActionPerformed
 
     private void btRecarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRecarregarActionPerformed
-        
-        refreshScreen();
+    refreshScreen();
     }//GEN-LAST:event_btRecarregarActionPerformed
 
     private void refreshScreen() {

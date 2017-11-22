@@ -151,5 +151,29 @@ public class ClienteRepository {
 			connection.releaseAll(stmt, conn);
 		}
 	}
+        public void delete(Long id) throws RepositoryException {
+		try {
+			if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+				connection.beginTransaction();
+			}			
+			
+                int i=0;
+		
+		this.conn = connection.getConnectionFromContext();
+		
+		stmt = conn.prepareStatement("delete from cliente where cli_id = ?"
+				, PreparedStatement.RETURN_GENERATED_KEYS);
+                stmt.setLong(++i, id);
+            
+		stmt.executeUpdate();
+			
+			
+			connection.endTransaction();			
+		} catch (SQLException e) {
+			throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+		} finally {
+			connection.releaseAll(stmt, conn);
+		}
+	}        
 
 }

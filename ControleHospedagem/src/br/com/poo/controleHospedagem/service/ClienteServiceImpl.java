@@ -49,4 +49,13 @@ public class ClienteServiceImpl{
 			// TODO: handle exception
 		}
 	}
+        
+        
+        public void deleteCliente (Long id) {
+            try {
+                (new ClienteRepository()).delete(id);
+            } catch (RepositoryException ex) {
+// TODO: handle exception
+            }
+	}
 }

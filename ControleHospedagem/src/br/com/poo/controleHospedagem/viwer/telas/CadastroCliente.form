@@ -250,6 +250,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btExcluir">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/group_delete.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Excluir"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
@@ -259,6 +262,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btCadastrar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/group_edit.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Cadastrar/Editar"/>
           </Properties>
           <Events>
@@ -311,7 +317,7 @@
                   <Component id="codigoClienteLoc" min="-2" pref="114" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   <Component id="btLocalizar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="252" max="32767" attributes="0"/>
+                  <EmptySpace pref="232" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -357,6 +363,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btLocalizar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/connect.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Localizar"/>
           </Properties>
           <Events>
@@ -376,6 +385,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btConsultar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/database.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Listar Clientes"/>
           </Properties>
           <Events>

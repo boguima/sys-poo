@@ -98,6 +98,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/group_delete.png"))); // NOI18N
         btExcluir.setText("Excluir");
         btExcluir.setEnabled(false);
         btExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -106,6 +107,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        btCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/group_edit.png"))); // NOI18N
         btCadastrar.setText("Cadastrar/Editar");
         btCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,6 +226,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
 
         codigoClienteLoc.setToolTipText("Digite o Código");
 
+        btLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/connect.png"))); // NOI18N
         btLocalizar.setText("Localizar");
         btLocalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,6 +242,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        btConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/database.png"))); // NOI18N
         btConsultar.setText("Listar Clientes");
         btConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,7 +261,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                 .addComponent(codigoClienteLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(btLocalizar)
-                .addContainerGap(252, Short.MAX_VALUE))
+                .addContainerGap(232, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btConsultar)

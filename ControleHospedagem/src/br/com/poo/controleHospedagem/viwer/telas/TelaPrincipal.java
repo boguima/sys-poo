@@ -170,7 +170,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        CadastroHospede tch = new CadastroHospede();
+        MantemHospedagem tch = new MantemHospedagem();
         jDesktopPane1.add(tch);
         tch.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed

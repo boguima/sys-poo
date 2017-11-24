@@ -20,6 +20,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class Quarto {
+
     @Getter
     @Setter
     private int id;
@@ -32,4 +33,8 @@ public class Quarto {
     @Getter
     @Setter
     private BigDecimal valorDia;
+
+    public Quarto(int codigo) {
+        this.id = codigo;
+    }
 }

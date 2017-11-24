@@ -58,15 +58,18 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         btCadastrar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        codigoHospedagem = new javax.swing.JTextField();
+        paramQuarto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        codigoHospedagem1 = new javax.swing.JTextField();
+        paramCodigoHospedagem = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        codigoHospedagem2 = new javax.swing.JTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        paramNmCliente = new javax.swing.JTextField();
+        paramDataSaida = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        paramDataEntarda = new javax.swing.JFormattedTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        paramObservacao = new javax.swing.JTextArea();
+        jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btRecarregar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -89,10 +92,13 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         setTitle("Gestão de Hospedagem");
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
-        jLabel1.setText("Check-in:");
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Observação");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Dados da Hospedgem");
         jLabel4.setMaximumSize(new java.awt.Dimension(320, 44));
         jLabel4.setMinimumSize(new java.awt.Dimension(320, 44));
@@ -117,37 +123,42 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
 
         jPanel5.setBackground(new java.awt.Color(0, 102, 102));
         jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        jPanel5.setForeground(new java.awt.Color(102, 102, 102));
 
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Código:");
 
-        codigoHospedagem.setEditable(false);
-        codigoHospedagem.setEnabled(false);
-        codigoHospedagem.addActionListener(new java.awt.event.ActionListener() {
+        paramQuarto.setEditable(false);
+        paramQuarto.setEnabled(false);
+        paramQuarto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                codigoHospedagemActionPerformed(evt);
+                paramQuartoActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Parâmetros Obrigatórios");
 
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Quarto:");
 
-        codigoHospedagem1.setEditable(false);
-        codigoHospedagem1.setEnabled(false);
-        codigoHospedagem1.addActionListener(new java.awt.event.ActionListener() {
+        paramCodigoHospedagem.setEditable(false);
+        paramCodigoHospedagem.setEnabled(false);
+        paramCodigoHospedagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                codigoHospedagem1ActionPerformed(evt);
+                paramCodigoHospedagemActionPerformed(evt);
             }
         });
 
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Cliente:");
 
-        codigoHospedagem2.setEditable(false);
-        codigoHospedagem2.setEnabled(false);
-        codigoHospedagem2.addActionListener(new java.awt.event.ActionListener() {
+        paramNmCliente.setEditable(false);
+        paramNmCliente.setEnabled(false);
+        paramNmCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                codigoHospedagem2ActionPerformed(evt);
+                paramNmClienteActionPerformed(evt);
             }
         });
 
@@ -162,12 +173,12 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                         .addGroup(jPanel5Layout.createSequentialGroup()
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(codigoHospedagem1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(paramCodigoHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(codigoHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(codigoHospedagem2))
+                            .addComponent(paramQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(paramNmCliente))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 186, Short.MAX_VALUE))
         );
@@ -178,21 +189,29 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(codigoHospedagem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paramCodigoHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(codigoHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(paramQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(codigoHospedagem2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(paramNmCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        paramDataSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Check-out:");
 
-        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        paramDataEntarda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+
+        paramObservacao.setColumns(20);
+        paramObservacao.setRows(5);
+        jScrollPane1.setViewportView(paramObservacao);
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Check-in:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -204,14 +223,13 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)
+                                .addGap(10, 10, 10)
+                                .addComponent(paramDataEntarda, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(paramDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(77, 77, 77)
                                 .addComponent(btExcluir)
@@ -222,7 +240,9 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -233,18 +253,23 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paramDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                    .addComponent(paramDataEntarda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btExcluir)
                     .addComponent(btCadastrar))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         btRecarregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/arrow_refresh.png"))); // NOI18N
         btRecarregar.setText("Recarregar Tela");
@@ -507,20 +532,36 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         if (codigo != null) {
             try {
                 this.hospedagem = (new HospedagemService()).findOne(Long.parseLong(codigo.getText()));
+                this.cliente = this.hospedagem.getCliente();
+                this.quarto = this.hospedagem.getQuarto();
+                codigoClienteLoc.setText(this.cliente.getId().toString());
+                nomeCliente.setText(this.cliente.getNomeCliente());
+                codigoQuarto.setText(String.valueOf(this.quarto.getId()));
+                dsQuarto.setText(this.quarto.getDescricao());
+                paramCodigoHospedagem.setText(String.valueOf(this.hospedagem.getId()));
+                paramQuarto.setText(this.quarto.getDescricao());
+                paramNmCliente.setText(this.cliente.getNomeCliente());
+                paramDataEntarda.setText(this.hospedagem.getDataEntrada().toString());
+                paramDataSaida.setText(this.hospedagem.getDataSaida() != null ? this.hospedagem.getDataSaida().toString() : "");
+                paramObservacao.setText(this.hospedagem.getObservacao());
+                
+                
+                
+                
             } catch (RepositoryException ex) {
                 Logger.getLogger(MantemHospedagem.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btLocalizarHospedagemActionPerformed
 
-    private void codigoHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoHospedagemActionPerformed
+    private void paramQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paramQuartoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_codigoHospedagemActionPerformed
+    }//GEN-LAST:event_paramQuartoActionPerformed
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         // TODO Metodo Para Cadastrar e Atualizar CLiente
         try {
-            if (codigoHospedagem.getText().equals("")) {
+            if (paramQuarto.getText().equals("")) {
                 try {
                     if (validaCamposObrigatorios()) {
                         JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção", JOptionPane.ERROR_MESSAGE);
@@ -560,8 +601,8 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         // TODO Remove Cliente
         try {
-            if (!"".equals(codigoHospedagem.getText())) {
-                (new ClienteServiceImpl()).deleteCliente(Long.parseLong(codigoHospedagem.getText()));
+            if (!"".equals(paramQuarto.getText())) {
+                (new ClienteServiceImpl()).deleteCliente(Long.parseLong(paramQuarto.getText()));
                 JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK", JOptionPane.INFORMATION_MESSAGE);
                 refreshScreen();
             } else {
@@ -572,17 +613,17 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btExcluirActionPerformed
 
-    private void codigoHospedagem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoHospedagem1ActionPerformed
+    private void paramCodigoHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paramCodigoHospedagemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_codigoHospedagem1ActionPerformed
+    }//GEN-LAST:event_paramCodigoHospedagemActionPerformed
 
-    private void codigoHospedagem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoHospedagem2ActionPerformed
+    private void paramNmClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paramNmClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_codigoHospedagem2ActionPerformed
+    }//GEN-LAST:event_paramNmClienteActionPerformed
 
     private void refreshScreen() {
         codigoClienteLoc.setText("");
-        codigoHospedagem.setText("");
+        paramQuarto.setText("");
         
 
         btLocalizar.setEnabled(true);
@@ -603,13 +644,8 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     private javax.swing.JButton btRecarregar;
     private javax.swing.JTextField codigo;
     private javax.swing.JTextField codigoClienteLoc;
-    private javax.swing.JTextField codigoHospedagem;
-    private javax.swing.JTextField codigoHospedagem1;
-    private javax.swing.JTextField codigoHospedagem2;
     private javax.swing.JTextField codigoQuarto;
     private javax.swing.JTextField dsQuarto;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -619,12 +655,20 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nomeCliente;
+    private javax.swing.JTextField paramCodigoHospedagem;
+    private javax.swing.JFormattedTextField paramDataEntarda;
+    private javax.swing.JFormattedTextField paramDataSaida;
+    private javax.swing.JTextField paramNmCliente;
+    private javax.swing.JTextArea paramObservacao;
+    private javax.swing.JTextField paramQuarto;
     // End of variables declaration//GEN-END:variables
 }

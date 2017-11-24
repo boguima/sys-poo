@@ -66,38 +66,39 @@ public class ClienteRepository {
         public Cliente findOne(Long codigo) throws RepositoryException{
             Cliente entity = null;
             try {
-                if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
-		    connection.beginTransaction();
+                if (this.connection.getConnectionContext() == null || this.connection.getConnectionContext().isClosed()) {
+		    this.connection.beginTransaction();
                 }        
 		
-		this.conn = connection.getConnectionFromContext();
-		//TODO Altera INSERT
-		stmt = conn.prepareStatement("select cli_id, cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email from cliente where cli_id = "+codigo.toString());	
-			
-		
+		entity = reflectionFindOne(codigo, entity, this.connection);
                 
-                ResultSet rs =  stmt.executeQuery();
-                
-                while (rs.next()) {                    
-                    entity = new Cliente(rs.getLong("cli_id")
-                            , rs.getString("cli_nome")
-                            , rs.getString("cli_endereco")
-                            , rs.getString("cli_uf")
-                            , rs.getString("cli_telefone")
-                            , rs.getString("cli_cpf")
-                            , rs.getString("cli_email"));
-                }
-                
-                connection.endTransaction();
+                this.connection.endTransaction();
               
                 
             } catch (SQLException e) {
                 throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
             } finally {
-			connection.releaseAll(stmt, conn);
+			this.connection.releaseAll(stmt, conn);
 		}
             return entity;        
         }
+
+    public Cliente reflectionFindOne(Long codigo, Cliente entity, ConnectionRepository connection) throws SQLException {
+        this.conn = connection.getConnectionFromContext();
+        
+        stmt = this.conn.prepareStatement("select cli_id, cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email from cliente where cli_id = "+codigo.toString());
+        ResultSet rs =  stmt.executeQuery();
+        while (rs.next()) {
+            entity = new Cliente(rs.getLong("cli_id")
+                    , rs.getString("cli_nome")
+                    , rs.getString("cli_endereco")
+                    , rs.getString("cli_uf")
+                    , rs.getString("cli_telefone")
+                    , rs.getString("cli_cpf")
+                    , rs.getString("cli_email"));
+        }
+        return entity;
+    }
         
         public List<Cliente> findAll( )throws RepositoryException{
             List<Cliente> listEntity = new ArrayList<>();

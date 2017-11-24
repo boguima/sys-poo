@@ -23,7 +23,7 @@ public class Quarto {
 
     @Getter
     @Setter
-    private int id;
+    private Long id;
     @Getter
     @Setter
     private String descricao;
@@ -34,7 +34,7 @@ public class Quarto {
     @Setter
     private BigDecimal valorDia;
 
-    public Quarto(int codigo) {
+    public Quarto(Long codigo) {
         this.id = codigo;
     }
 }

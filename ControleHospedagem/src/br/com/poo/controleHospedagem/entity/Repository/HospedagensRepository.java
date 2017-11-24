@@ -47,11 +47,11 @@ public class HospedagensRepository {
     public Hospedagens findOne(Long codigo) throws RepositoryException {
         Hospedagens entity = null;
         try {
-            if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
-                connection.beginTransaction();
+            if (this.connection.getConnectionContext() == null || this.connection.getConnectionContext().isClosed()) {
+                this.connection.beginTransaction();
             }
 
-            this.conn = connection.getConnectionFromContext();
+            this.conn = this.connection.getConnectionFromContext();
 
             stmt = conn.prepareStatement("select hosp_id, hosp_dtentrada, hosp_dtsaida, hosp_stcheckout, hosp_idcliente, hosp_observacao, hosp_idquarto from hospedagens where hosp_id = " + codigo.toString());
 
@@ -64,16 +64,18 @@ public class HospedagensRepository {
                         , new Cliente(rs.getLong("hosp_idcliente"))
                         , rs.getString("hosp_stcheckout")
                         , rs.getString("hosp_observacao")
-                        , new Quarto(rs.getInt("hosp_idquarto"))
+                        , new Quarto(rs.getLong("hosp_idquarto"))
                 );
             }
-
-            connection.endTransaction();
+           entity.setCliente((new ClienteRepository()).reflectionFindOne(entity.getCliente().getId(), entity.getCliente(), this.connection));
+           entity.setQuarto((new QuartoRepository()).reflectionFindOne(entity.getQuarto().getId() , entity.getQuarto(), this.connection));
+           
+            this.connection.endTransaction();
 
         } catch (SQLException e) {
             throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
         } finally {
-            connection.releaseAll(stmt, conn);
+            this.connection.releaseAll(stmt, conn);
         }
         return entity;
     }

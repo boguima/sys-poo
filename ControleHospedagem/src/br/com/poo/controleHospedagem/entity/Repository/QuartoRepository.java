@@ -67,34 +67,35 @@ public class QuartoRepository {
         public Quarto findOne(Long codigo) throws RepositoryException{
             Quarto entity = null;
             try {
-                if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
-		    connection.beginTransaction();
+                if (this.connection.getConnectionContext() == null || this.connection.getConnectionContext().isClosed()) {
+		    this.connection.beginTransaction();
                 }        
 		
-		this.conn = connection.getConnectionFromContext();
-		
-		stmt = conn.prepareStatement("select quahosp_id, quahosp_ds, quahosp_st, quahosp_vl from quartos_hospedagens where quahosp_id = "+codigo.toString());			
-		
+		entity = reflectionFindOne(codigo, entity, this.connection);
                 
-                ResultSet rs =  stmt.executeQuery();
-                
-                while (rs.next()) {                    
-                    entity = new Quarto(rs.getInt("quahosp_id")
-                            , rs.getString("quahosp_ds")
-                            , rs.getString("quahosp_st").charAt(0)
-                            , rs.getBigDecimal("quahosp_vl"));
-                }
-                
-                connection.endTransaction();
+                this.connection.endTransaction();
               
                 
             } catch (SQLException e) {
                 throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
             } finally {
-			connection.releaseAll(stmt, conn);
+			this.connection.releaseAll(stmt, conn);
 		}
             return entity;        
         }
+
+    public Quarto reflectionFindOne(Long codigo, Quarto entity, ConnectionRepository connection) throws SQLException {
+        this.conn = connection.getConnectionFromContext();
+        stmt = this.conn.prepareStatement("select quahosp_id, quahosp_ds, quahosp_st, quahosp_vl from quartos_hospedagens where quahosp_id = "+codigo.toString());
+        ResultSet rs =  stmt.executeQuery();
+        while (rs.next()) {
+            entity = new Quarto(rs.getLong("quahosp_id")
+                    , rs.getString("quahosp_ds")
+                    , rs.getString("quahosp_st").charAt(0)
+                    , rs.getBigDecimal("quahosp_vl"));
+        }
+        return entity;
+    }
         
         public List<Cliente> findAll( )throws RepositoryException{
             List<Cliente> listEntity = new ArrayList<>();

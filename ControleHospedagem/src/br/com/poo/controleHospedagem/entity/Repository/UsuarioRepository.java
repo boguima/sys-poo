@@ -16,6 +16,8 @@ public class UsuarioRepository {
 	private Connection conn;
 	
 	private PreparedStatement stmt;
+        
+        private static final String FINDONE = "select usu_id, usu_usuario, usu_senha from usuario where usu_usuario = '";
 	
 	public UsuarioRepository () {
 		connection = new ConnectionRepository();		
@@ -59,7 +61,7 @@ public class UsuarioRepository {
 		
 		this.conn = connection.getConnectionFromContext();
 		//TODO Altera INSERT
-		stmt = conn.prepareStatement("select usu_id, usu_usuario, usu_senha from usuario where usu_usuario = '"+usuario+"'");	
+		stmt = conn.prepareStatement(FINDONE+usuario+"'");	
 			
 		
                 

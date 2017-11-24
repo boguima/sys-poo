@@ -29,7 +29,7 @@ public class Quarto {
     private String descricao;
     @Getter
     @Setter
-    private char situacao;
+    private String situacao;
     @Getter
     @Setter
     private BigDecimal valorDia;

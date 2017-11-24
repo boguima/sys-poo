@@ -91,7 +91,7 @@ public class QuartoRepository {
         while (rs.next()) {
             entity = new Quarto(rs.getLong("quahosp_id")
                     , rs.getString("quahosp_ds")
-                    , rs.getString("quahosp_st").charAt(0)
+                    , rs.getString("quahosp_st")
                     , rs.getBigDecimal("quahosp_vl"));
         }
         return entity;

@@ -23,11 +23,11 @@ import lombok.Setter;
  * @author Brnuno
  */
 public class MantemHospedagem extends javax.swing.JInternalFrame {
-
+    
     @Getter
     @Setter
     private Cliente cliente;
-
+    
     @Getter
     @Setter
     private Quarto quarto;
@@ -98,7 +98,6 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         jLabel1.setText("Observação");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Dados da Hospedgem");
         jLabel4.setMaximumSize(new java.awt.Dimension(320, 44));
         jLabel4.setMinimumSize(new java.awt.Dimension(320, 44));
@@ -480,7 +479,8 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         if (!codigoClienteLoc.getText().equals("")) {
             this.cliente = (new ClienteServiceImpl()).findOne(Long.parseLong(codigoClienteLoc.getText()));
             if (this.cliente != null) {
-                nomeCliente.setText(this.cliente.getNomeCliente());
+                this.setViwerDadosCliente();
+                
                 codigoQuarto.setEnabled(true);
                 btLocalizarQuarto.setEnabled(true);
                 btConsultarQuarto.setEnabled(true);
@@ -504,14 +504,17 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btRecarregarActionPerformed
 
     private void btLocalizarQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocalizarQuartoActionPerformed
-        if (codigoQuarto != null) {
+        if (!"".equals(codigoQuarto.getText())) {
             try {
                 this.quarto = (new QuartoRepository()).findOne(Long.parseLong(codigoQuarto.getText()));
-                if (this.quarto != null) {
-                    dsQuarto.setText(this.quarto.getDescricao());
+                if (this.quarto != null && "1".equals(this.quarto.getSituacao())) {
+                    this.setViwerDadosQuarto();
+                    
                     btCadastrar.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Quarto Não Localizado ou ocupado", "Atenção", JOptionPane.ERROR_MESSAGE);
                 }
-
+                
             } catch (RepositoryException ex) {
                 Logger.getLogger(MantemHospedagem.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -529,30 +532,50 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_codigoActionPerformed
 
     private void btLocalizarHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocalizarHospedagemActionPerformed
-        if (codigo != null) {
+        if (!"".equals(codigo.getText())) {
             try {
                 this.hospedagem = (new HospedagemService()).findOne(Long.parseLong(codigo.getText()));
-                this.cliente = this.hospedagem.getCliente();
-                this.quarto = this.hospedagem.getQuarto();
-                codigoClienteLoc.setText(this.cliente.getId().toString());
-                nomeCliente.setText(this.cliente.getNomeCliente());
-                codigoQuarto.setText(String.valueOf(this.quarto.getId()));
-                dsQuarto.setText(this.quarto.getDescricao());
-                paramCodigoHospedagem.setText(String.valueOf(this.hospedagem.getId()));
-                paramQuarto.setText(this.quarto.getDescricao());
-                paramNmCliente.setText(this.cliente.getNomeCliente());
-                paramDataEntarda.setText(this.hospedagem.getDataEntrada().toString());
-                paramDataSaida.setText(this.hospedagem.getDataSaida() != null ? this.hospedagem.getDataSaida().toString() : "");
-                paramObservacao.setText(this.hospedagem.getObservacao());
-                
-                
-                
+                if (this.hospedagem != null) {
+                    this.cliente = this.hospedagem.getCliente();
+                    this.quarto = this.hospedagem.getQuarto();
+                    
+                    setViwerDadosQuarto();
+                    setViwerDadosHospedagem();
+                    setViwerDadosCliente();
+                } else {
+                    codigo.setText("");
+                    JOptionPane.showMessageDialog(null, "Hospedagem não localizado", "Atenção", JOptionPane.ERROR_MESSAGE);
+                }
                 
             } catch (RepositoryException ex) {
                 Logger.getLogger(MantemHospedagem.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Informar Código da Hospedagem", "Atenção", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btLocalizarHospedagemActionPerformed
+    
+    private void setViwerDadosQuarto() {
+        //QUARTO
+        codigoQuarto.setText(String.valueOf(this.quarto.getId()));
+        dsQuarto.setText(this.quarto.getDescricao());
+        paramQuarto.setText(this.quarto.getDescricao());
+    }
+    
+    private void setViwerDadosHospedagem() {
+        //HOSPEDAGEM
+        paramCodigoHospedagem.setText(String.valueOf(this.hospedagem.getId()));
+        paramDataEntarda.setText(this.hospedagem.getDataEntrada().toString());
+        paramDataSaida.setText(this.hospedagem.getDataSaida() != null ? this.hospedagem.getDataSaida().toString() : "");
+        paramObservacao.setText(this.hospedagem.getObservacao());
+    }
+    
+    private void setViwerDadosCliente() {
+        //CLIENTE
+        codigoClienteLoc.setText(this.cliente.getId().toString());
+        nomeCliente.setText(this.cliente.getNomeCliente());
+        paramNmCliente.setText(this.cliente.getNomeCliente());
+    }
 
     private void paramQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paramQuartoActionPerformed
         // TODO add your handling code here:
@@ -620,12 +643,11 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     private void paramNmClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paramNmClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_paramNmClienteActionPerformed
-
+    
     private void refreshScreen() {
         codigoClienteLoc.setText("");
         paramQuarto.setText("");
         
-
         btLocalizar.setEnabled(true);
         btExcluir.setEnabled(false);
         btCadastrar.setEnabled(true);

@@ -29,7 +29,7 @@ public class HospedagensRepository {
             int i = 0;
             conn = connection.getConnection();
             stmt = conn.prepareStatement("insert int hospedagens (hosp_dtentrada, hosp_dtsaida, hosp_stcheckout, hosp_idcliente, hosp_observacao) values ( ? , ? , ? , ? , ? )",
-                     PreparedStatement.RETURN_GENERATED_KEYS);
+                    PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setDate(++i, (Date) hospedagen.getDataEntrada());
             stmt.setDate(++i, (Date) hospedagen.getDataSaida());
             stmt.setString(++i, hospedagen.getStCheckout());
@@ -58,18 +58,24 @@ public class HospedagensRepository {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                entity = new Hospedagens(rs.getInt("hosp_id")
-                        , rs.getDate("hosp_dtentrada")
-                        , rs.getDate("hosp_dtsaida")
-                        , new Cliente(rs.getLong("hosp_idcliente"))
-                        , rs.getString("hosp_stcheckout")
-                        , rs.getString("hosp_observacao")
-                        , new Quarto(rs.getLong("hosp_idquarto"))
+                entity = new Hospedagens(rs.getInt("hosp_id"),
+                         rs.getDate("hosp_dtentrada"),
+                         rs.getDate("hosp_dtsaida"),
+                         new Cliente(rs.getLong("hosp_idcliente")),
+                         rs.getString("hosp_stcheckout"),
+                         rs.getString("hosp_observacao"),
+                         new Quarto(rs.getLong("hosp_idquarto"))
                 );
             }
-           entity.setCliente((new ClienteRepository()).reflectionFindOne(entity.getCliente().getId(), entity.getCliente(), this.connection));
-           entity.setQuarto((new QuartoRepository()).reflectionFindOne(entity.getQuarto().getId() , entity.getQuarto(), this.connection));
-           
+            if (entity != null && entity.getCliente() != null) {
+                entity.setCliente((new ClienteRepository()).reflectionFindOne(entity.getCliente().getId(), entity.getCliente(), this.connection));
+
+            }
+            if (entity != null &&  entity.getQuarto() != null) {
+                entity.setQuarto((new QuartoRepository()).reflectionFindOne(entity.getQuarto().getId(), entity.getQuarto(), this.connection));
+
+            }
+
             this.connection.endTransaction();
 
         } catch (SQLException e) {

@@ -477,7 +477,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
 
     private void btLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocalizarActionPerformed
         if (!codigoClienteLoc.getText().equals("")) {
-            this.cliente = (new ClienteServiceImpl()).findOne(Long.parseLong(codigoClienteLoc.getText()));
+            this.cliente = (new ClienteServiceImpl()).findOne(Long.parseLong(codigoClienteLoc.getText()));            
             if (this.cliente != null) {
                 this.setViwerDadosCliente();
                 
@@ -507,7 +507,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         if (!"".equals(codigoQuarto.getText())) {
             try {
                 this.quarto = (new QuartoRepository()).findOne(Long.parseLong(codigoQuarto.getText()));
-                if (this.quarto != null && "1".equals(this.quarto.getSituacao())) {
+                if (this.quarto != null || !"1".equals(this.quarto.getSituacao())) {
                     this.setViwerDadosQuarto();
                     
                     btCadastrar.setEnabled(true);

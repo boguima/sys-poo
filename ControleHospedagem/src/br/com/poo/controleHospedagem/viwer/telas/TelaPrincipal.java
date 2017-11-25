@@ -83,7 +83,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/house.png"))); // NOI18N
         jMenu3.setText("Hospedagem");
 
-        jMenuItem3.setText("Cadastro");
+        jMenuItem3.setText("Manter Hospedagem");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);

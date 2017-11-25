@@ -371,7 +371,7 @@ try {
     }//GEN-LAST:event_btCadastrarActionPerformed
 
     private boolean validaCamposObrigatorios() {
-        return nome.getText().equals("") || endereco.getText().equals("") || ((String) uf.getSelectedItem()).equals("") || telefone.getText().equals("") || cpf.getText().equals("") && email.getText().equals("");
+        return nome.getText().equals("") || endereco.getText().equals("") || ((String) uf.getSelectedItem()).equals("") || telefone.getText().equals("") || cpf.getText().equals("") || email.getText().equals("");
     }
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed

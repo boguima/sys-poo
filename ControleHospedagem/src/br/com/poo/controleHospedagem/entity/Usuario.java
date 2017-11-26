@@ -14,18 +14,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @AllArgsConstructor
-@EqualsAndHashCode(of = { "id" })
 public class Usuario {
-        @Setter
-        @Getter
+	@Setter
+	@Getter
 	private Long id;
-        
-        @Setter
-        @Getter
-        private String usuario;
-        
-        @Setter
-        @Getter
-        private String senha;
-    
+
+	@Setter
+	@Getter
+	private String usuario;
+
+	@Setter
+	@Getter
+	private String senha;
+
 }

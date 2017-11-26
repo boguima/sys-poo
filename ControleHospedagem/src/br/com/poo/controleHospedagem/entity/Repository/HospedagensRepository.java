@@ -27,17 +27,22 @@ public class HospedagensRepository {
     public void inserir(Hospedagens hospedagen) throws RepositoryException {
         try {
             int i = 0;
+            if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+                connection.beginTransaction();
+            }
             conn = connection.getConnection();
-            stmt = conn.prepareStatement("insert int hospedagens (hosp_dtentrada, hosp_dtsaida, hosp_stcheckout, hosp_idcliente, hosp_observacao) values ( ? , ? , ? , ? , ? )",
+            stmt = conn.prepareStatement("INSERT INTO hospedagens (hosp_dtentrada, hosp_dtsaida, hosp_stcheckout, hosp_idcliente, hosp_observacao, hosp_idquarto) VALUES (?, ?, ?, ?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt.setDate(++i, (Date) hospedagen.getDataEntrada());
-            stmt.setDate(++i, (Date) hospedagen.getDataSaida());
+            stmt.setString(++i,	hospedagen.getDataEntradaAux());
+            stmt.setString(++i, hospedagen.getDataSaidaAux().equals("") ? null : hospedagen.getDataSaidaAux());
             stmt.setString(++i, hospedagen.getStCheckout());
-            stmt.setLong(++i, hospedagen.getCliente().getId());
+            stmt.setLong(++i, 	hospedagen.getCliente().getId());
             stmt.setString(++i, hospedagen.getObservacao());
+            stmt.setLong(++i, 	hospedagen.getQuarto().getId());
             stmt.executeUpdate();
-
+            connection.endTransaction();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
         } finally {
             connection.releaseAll(stmt, conn);
@@ -59,19 +64,21 @@ public class HospedagensRepository {
 
             while (rs.next()) {
                 entity = new Hospedagens(rs.getInt("hosp_id"),
-                         rs.getDate("hosp_dtentrada"),
-                         rs.getDate("hosp_dtsaida"),
-                         new Cliente(rs.getLong("hosp_idcliente")),
-                         rs.getString("hosp_stcheckout"),
-                         rs.getString("hosp_observacao"),
-                         new Quarto(rs.getLong("hosp_idquarto"))
+                        rs.getDate("hosp_dtentrada"),
+                        rs.getDate("hosp_dtsaida"),
+                        new Cliente(rs.getLong("hosp_idcliente")),
+                        rs.getString("hosp_stcheckout"),
+                        rs.getString("hosp_observacao"),
+                        new Quarto(rs.getLong("hosp_idquarto"))
+                        ,""
+                        ,""
                 );
             }
             if (entity != null && entity.getCliente() != null) {
                 entity.setCliente((new ClienteRepository()).reflectionFindOne(entity.getCliente().getId(), entity.getCliente(), this.connection));
 
             }
-            if (entity != null &&  entity.getQuarto() != null) {
+            if (entity != null && entity.getQuarto() != null) {
                 entity.setQuarto((new QuartoRepository()).reflectionFindOne(entity.getQuarto().getId(), entity.getQuarto(), this.connection));
 
             }

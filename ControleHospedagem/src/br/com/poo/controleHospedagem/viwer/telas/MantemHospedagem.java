@@ -605,6 +605,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
 
 					setViwerDadosQuarto();
 					setViwerDadosHospedagem();
+                                        this.paramDataEntarda.setEditable(false);
 					setViwerDadosCliente();
 				} else {
 					codigo.setText("");
@@ -680,14 +681,12 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
 					if (validaCamposObrigatorios()) {
 						JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção",
 								JOptionPane.ERROR_MESSAGE);
-						codigoClienteLoc.setEnabled(false);
-						codigoClienteLoc.setText("");
-						btLocalizar.setEnabled(false);
 					} else {
-						// (new ClienteServiceImpl()).update(new
-						// Cliente(Long.parseLong(codigoHospedagem.getText()), nome.getText(),
-						// endereco.getText(), (String) uf.getSelectedItem(), telefone.getText(),
-						// cpf.getText(), email.getText()));
+                                            if((new HospedagemService()).findOne(new Long(this.hospedagem.getId())).getQuarto().getId() != this.hospedagem.getQuarto().getId())
+                                                //Atualiza Qaurto anteriror para disponivel
+                                            
+                                            this.hospedagem.setDataSaidaAux("");
+                                            (new HospedagemService()).update(this.hospedagem);
 					}
 					// JOptionPane.showMessageDialog(null,"Operação Concluída com
 					// Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);

@@ -33,12 +33,12 @@ public class HospedagensRepository {
             conn = connection.getConnection();
             stmt = conn.prepareStatement("INSERT INTO hospedagens (hosp_dtentrada, hosp_dtsaida, hosp_stcheckout, hosp_idcliente, hosp_observacao, hosp_idquarto) VALUES (?, ?, ?, ?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt.setString(++i,	hospedagen.getDataEntradaAux());
+            stmt.setString(++i, hospedagen.getDataEntradaAux());
             stmt.setString(++i, hospedagen.getDataSaidaAux().equals("") ? null : hospedagen.getDataSaidaAux());
             stmt.setString(++i, hospedagen.getStCheckout());
-            stmt.setLong(++i, 	hospedagen.getCliente().getId());
+            stmt.setLong(++i, hospedagen.getCliente().getId());
             stmt.setString(++i, hospedagen.getObservacao());
-            stmt.setLong(++i, 	hospedagen.getQuarto().getId());
+            stmt.setLong(++i, hospedagen.getQuarto().getId());
             stmt.executeUpdate();
             connection.endTransaction();
         } catch (SQLException e) {
@@ -69,9 +69,9 @@ public class HospedagensRepository {
                         new Cliente(rs.getLong("hosp_idcliente")),
                         rs.getString("hosp_stcheckout"),
                         rs.getString("hosp_observacao"),
-                        new Quarto(rs.getLong("hosp_idquarto"))
-                        ,""
-                        ,""
+                        new Quarto(rs.getLong("hosp_idquarto")),
+                        "",
+                        ""
                 );
             }
             if (entity != null && entity.getCliente() != null) {
@@ -91,6 +91,35 @@ public class HospedagensRepository {
             this.connection.releaseAll(stmt, conn);
         }
         return entity;
+    }
+
+    public void update(Hospedagens hospedagem) throws RepositoryException {
+        try {
+            if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+                connection.beginTransaction();
+            }
+
+            int i = 0;
+
+            this.conn = connection.getConnectionFromContext();
+
+            stmt = conn.prepareStatement("UPDATE hospedagens SET hosp_dtentrada = ?, hosp_dtsaida = ?, hosp_stcheckout = ?, hosp_idcliente = ?, hosp_observacao = ?, hosp_idquarto = ? WHERE hosp_id = ?",
+                     PreparedStatement.NO_GENERATED_KEYS);
+            stmt.setString(++i, hospedagem.getDataEntradaAux());
+            stmt.setString(++i, hospedagem.getDataSaidaAux().equals("") ? null : hospedagem.getDataSaidaAux());
+            stmt.setString(++i, hospedagem.getStCheckout());
+            stmt.setLong(++i, hospedagem.getCliente().getId());
+            stmt.setString(++i, hospedagem.getObservacao());
+            stmt.setLong(++i, hospedagem.getQuarto().getId());
+            stmt.setLong(++i, hospedagem.getId());
+            stmt.executeUpdate();
+
+            connection.endTransaction();
+        } catch (SQLException e) {
+            throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+        } finally {
+            connection.releaseAll(stmt, conn);
+        }
     }
 
 }

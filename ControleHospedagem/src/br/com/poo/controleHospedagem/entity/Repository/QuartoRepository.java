@@ -21,21 +21,21 @@ public class QuartoRepository {
 	
 	private PreparedStatement stmt;
         
-        private static final String INSERT = "insert into cliente (cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email) values ( ? , ? , ? , ? , ? , ? )";
+        private static final String INSERT = "insert into quartos_hospedagens (quahosp_ds,quahosp_st ,quahosp_vl ) values ( ? , ? , ? )";
         
-        private static final String UPDATE = "update cliente SET cli_nome = ?, cli_endereco = ?, cli_uf = ?, cli_telefone = ?, cli_cpf = ?, cli_email = ? where cli_id = ?";
+        private static final String UPDATE = "update quartos_hospedagens  SET quahosp_ds = ?, quahosp_st = ?, quahosp_vl= ? where quahosp_id= ?";
 	
 	public QuartoRepository () {
 		connection = new ConnectionRepository();		
 	}
 
-	public void inserir(Cliente cliente) throws RepositoryException {
+	public void inserir(Quarto quarto) throws RepositoryException {
 		try {
 			if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
 				connection.beginTransaction();
 			}			
 			
-			inserir(cliente, INSERT, "insert", this.connection);
+			inserir(quarto, INSERT, "insert", this.connection);
 			
 			connection.endTransaction();			
 		} catch (SQLException e) {
@@ -45,21 +45,20 @@ public class QuartoRepository {
 		}
 	}
 
-	public void inserir(Cliente cliente, String sql, String op,ConnectionRepository connection) throws SQLException {
+	public void inserir(Quarto quarto, String sql, String op,ConnectionRepository connection) throws SQLException {
 		int i=0;
 		
 		this.conn = connection.getConnectionFromContext();
 		
 		stmt = conn.prepareStatement(sql
 				, PreparedStatement.RETURN_GENERATED_KEYS);					
-		stmt.setString(++i, cliente.getNomeCliente());
-		stmt.setString(++i, cliente.getEndereco());
-		stmt.setString(++i, cliente.getUf());
-		stmt.setString(++i, cliente.getTelefone());
-		stmt.setString(++i, cliente.getCpf() );
-		stmt.setString(++i, cliente.getEMail());
+		stmt.setString(++i, quarto.getDescricao());
+		stmt.setString(++i, quarto.getSituacao());
+		stmt.setBigDecimal(++i, quarto.getValorDia());
+		
+		
                 if ("update".equals(op)) {
-                stmt.setLong(++i, cliente.getId());
+                stmt.setLong(++i, quarto.getId());
             }
 		stmt.executeUpdate();
 	}
@@ -97,8 +96,8 @@ public class QuartoRepository {
         return entity;
     }
         
-        public List<Cliente> findAll( )throws RepositoryException{
-            List<Cliente> listEntity = new ArrayList<>();
+        public List<Quarto> findAll( )throws RepositoryException{
+            List<Quarto> listEntity = new ArrayList<>();
             try {
                 if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
 		    connection.beginTransaction();
@@ -106,20 +105,19 @@ public class QuartoRepository {
 		
 		this.conn = connection.getConnectionFromContext();
 		
-		stmt = conn.prepareStatement("select cli_id, cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email from cliente");	
+		stmt = conn.prepareStatement("select quahosp_id , quahosp_ds , quahosp_st , quahosp_vl from quartos_hospedagens ");	
 			
 		
                 
                 ResultSet rs =  stmt.executeQuery();
                                 
                 while (rs.next()) {                    
-                    listEntity.add(new Cliente(rs.getLong("cli_id")
-                            , rs.getString("cli_nome")
-                            , rs.getString("cli_endereco")
-                            , rs.getString("cli_uf")
-                            , rs.getString("cli_telefone")
-                            , rs.getString("cli_cpf")
-                            , rs.getString("cli_email")));
+                    listEntity.add(new Quarto(rs.getLong("quahosp_id")
+                            ,rs.getString("quahosp_ds")
+                            , rs.getString("quahosp_st")
+                            , rs.getBigDecimal("quahosp_vl ")
+                           
+                           ));
                 }
                 
                 connection.endTransaction();
@@ -134,13 +132,13 @@ public class QuartoRepository {
         }
         
         
-        	public void update(Cliente cliente) throws RepositoryException {
+        	public void update(Quarto quarto) throws RepositoryException {
 		try {
 			if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
 				connection.beginTransaction();
 			}			
 			
-			inserir(cliente, UPDATE, "update", this.connection);
+			inserir(quarto, UPDATE, "update", this.connection);
 			
 			connection.endTransaction();			
 		} catch (SQLException e) {
@@ -159,7 +157,7 @@ public class QuartoRepository {
 		
 		this.conn = connection.getConnectionFromContext();
 		
-		stmt = conn.prepareStatement("delete from cliente where cli_id = ?"
+		stmt = conn.prepareStatement("delete from quartos_hospedagens where quahosp_id = ?"
 				, PreparedStatement.RETURN_GENERATED_KEYS);
                 stmt.setLong(++i, id);
             

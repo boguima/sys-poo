@@ -14,9 +14,5 @@ import br.com.poo.controleHospedagem.util.RepositoryException;
  * @author bruno.oliveira
  */
 public class QuartoService  extends QuartoRepository{
-    
-    public Quarto findOneQuarto(Long codigo) throws RepositoryException{
-        return super.findOne(codigo);
-    }
-    
+      
 }

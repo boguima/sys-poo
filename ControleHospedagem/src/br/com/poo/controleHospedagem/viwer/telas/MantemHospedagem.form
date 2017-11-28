@@ -339,7 +339,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel3" alignment="0" min="-2" pref="109" max="-2" attributes="0"/>
                           <Component id="paramDataSaida" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
-                          <Component id="fecharContaHospedagem" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="btFecharContaHospedagem" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="valorTotalAPagar" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
@@ -362,7 +362,7 @@
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Component id="valorTotalAPagar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                      <Component id="fecharContaHospedagem" min="-2" max="-2" attributes="0"/>
+                      <Component id="btFecharContaHospedagem" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -389,12 +389,13 @@
                 <Property name="toolTipText" type="java.lang.String" value="Data Saida"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="fecharContaHospedagem">
+            <Component class="javax.swing.JButton" name="btFecharContaHospedagem">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/money.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Fechar Conta"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">

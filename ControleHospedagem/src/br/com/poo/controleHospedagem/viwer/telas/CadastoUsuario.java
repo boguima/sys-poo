@@ -275,6 +275,8 @@ public class CadastoUsuario extends javax.swing.JInternalFrame {
                         btLocalizar.setEnabled(false);
                     } else {
                         (new UsuarioService()).update(new Usuario(Long.parseLong(codigo.getText()),jTextField1.getText(),jTextField2.getText()));
+                         jTextField1.setText("");
+                         jTextField2.setText("");
                     }
                     //JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception e) {

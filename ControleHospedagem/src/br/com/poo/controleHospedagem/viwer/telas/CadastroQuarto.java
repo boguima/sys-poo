@@ -98,7 +98,12 @@ public class CadastroQuarto extends javax.swing.JInternalFrame {
 
         jLabel13.setText("Valor:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OC", "DC" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DC", "OC" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -271,7 +276,7 @@ try {
                 codigoClienteLoc.setText("");
                 btLocalizar.setEnabled(false);
             } else {
-                (new QuartoService()).inserir(new Quarto(0L,jTextField1.getText(),String.valueOf(jComboBox1.getSelectedItem()) ,BigDecimal.valueOf(Float.parseFloat(jTextField2.getText()))));
+                (new QuartoService()).inserir(new Quarto(0L,jTextField1.getText(),String.valueOf(jComboBox1.getSelectedIndex()) ,BigDecimal.valueOf(Float.parseFloat(jTextField2.getText()))));
                          jTextField1.setText("");
                          jTextField2.setText("");
             }
@@ -286,7 +291,9 @@ try {
                 codigoClienteLoc.setText("");
                 btLocalizar.setEnabled(false);
             } else {
-            (new QuartoService()).update(new Quarto(Long.valueOf(codigo.getText()),jTextField1.getText(),String.valueOf(jComboBox1.getSelectedItem()) ,BigDecimal.valueOf(Float.parseFloat(jTextField2.getText()))));            
+            (new QuartoService()).update(new Quarto(Long.valueOf(codigo.getText()),jTextField1.getText(),String.valueOf(jComboBox1.getSelectedIndex()) ,BigDecimal.valueOf(Float.parseFloat(jTextField2.getText())))); 
+              jTextField1.setText("");
+              jTextField2.setText("");
             }            
             //JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);                
              } catch (Exception e) {
@@ -315,7 +322,7 @@ try {
             if (quartos != null) {
                 codigo.setText(quartos.getId().toString());
                 jTextField1.setText(quartos.getDescricao());
-                jComboBox1.setSelectedItem(quartos.getSituacao());
+                jComboBox1.setSelectedIndex(Integer.parseInt(quartos.getSituacao()));
                 jTextField2.setText(String.valueOf(quartos.getValorDia()));
               
                 btExcluir.setEnabled(true);                
@@ -330,13 +337,22 @@ try {
     }//GEN-LAST:event_btLocalizarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        ListaClientes form = new ListaClientes();
+        ListaQuarto form = null;
+        try {
+            form = new ListaQuarto();
+        } catch (RepositoryException ex) {
+            Logger.getLogger(CadastroQuarto.class.getName()).log(Level.SEVERE, null, ex);
+        }
         form.setVisible(true);
     }//GEN-LAST:event_btConsultarActionPerformed
 
     private void btRecarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRecarregarActionPerformed
     refreshScreen();
     }//GEN-LAST:event_btRecarregarActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void refreshScreen() {
         codigoClienteLoc.setText("");

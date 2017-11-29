@@ -96,16 +96,16 @@ public class QuartoRepository {
         return entity;
     }
         
-        public List<Quarto> findAll( )throws RepositoryException{
+        public List<Quarto> findAll()throws RepositoryException{
             List<Quarto> listEntity = new ArrayList<>();
             try {
-                if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
-		    connection.beginTransaction();
+               if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+	         connection.beginTransaction();
                 }        
-		
+		connection.beginTransaction();
 		this.conn = connection.getConnectionFromContext();
 		
-		stmt = conn.prepareStatement("select quahosp_id , quahosp_ds , quahosp_st , quahosp_vl from quartos_hospedagens ");	
+		stmt = conn.prepareStatement("select*from quartos_hospedagens");	
 			
 		
                 
@@ -115,7 +115,7 @@ public class QuartoRepository {
                     listEntity.add(new Quarto(rs.getLong("quahosp_id")
                             ,rs.getString("quahosp_ds")
                             , rs.getString("quahosp_st")
-                            , rs.getBigDecimal("quahosp_vl ")
+                            , rs.getBigDecimal("quahosp_vl")
                            
                            ));
                 }

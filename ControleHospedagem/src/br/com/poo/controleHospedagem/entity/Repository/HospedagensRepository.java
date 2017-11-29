@@ -23,6 +23,8 @@ public class HospedagensRepository {
     public HospedagensRepository() {
         connection = new ConnectionRepository();
     }
+    
+    private static final String UPDATEQUARTO = "update quartos_hospedagens  SET quahosp_ds = ?, quahosp_st = ?, quahosp_vl= ? where quahosp_id= ?";
 
     public void inserir(Hospedagens hospedagen) throws RepositoryException {
         try {
@@ -104,7 +106,7 @@ public class HospedagensRepository {
             this.conn = connection.getConnectionFromContext();
 
             stmt = conn.prepareStatement("UPDATE hospedagens SET hosp_dtentrada = ?, hosp_dtsaida = ?, hosp_stcheckout = ?, hosp_idcliente = ?, hosp_observacao = ?, hosp_idquarto = ? WHERE hosp_id = ?",
-                     PreparedStatement.NO_GENERATED_KEYS);
+                    PreparedStatement.NO_GENERATED_KEYS);
             stmt.setString(++i, hospedagem.getDataEntradaAux());
             stmt.setString(++i, hospedagem.getDataSaidaAux().equals("") ? null : hospedagem.getDataSaidaAux());
             stmt.setString(++i, hospedagem.getStCheckout());
@@ -112,6 +114,35 @@ public class HospedagensRepository {
             stmt.setString(++i, hospedagem.getObservacao());
             stmt.setLong(++i, hospedagem.getQuarto().getId());
             stmt.setLong(++i, hospedagem.getId());
+            stmt.executeUpdate();
+
+            connection.endTransaction();
+        } catch (SQLException e) {
+            throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+        } finally {
+            connection.releaseAll(stmt, conn);
+        }
+    }
+
+    public void delete(Hospedagens entity) throws RepositoryException {
+        try {
+            if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+                connection.beginTransaction();
+            }
+
+            int i = 0;
+
+            this.conn = connection.getConnectionFromContext();
+
+            stmt = conn.prepareStatement("delete from hospedagens where hosp_id = ?",
+                     PreparedStatement.RETURN_GENERATED_KEYS);
+            stmt.setLong(++i, entity.getId());
+            
+            if (entity.getQuarto() != null) {
+                entity.getQuarto().setSituacao("0");
+                (new QuartoRepository()).inserir(entity.getQuarto(), UPDATEQUARTO, "update", this.connection);
+            }
+
             stmt.executeUpdate();
 
             connection.endTransaction();

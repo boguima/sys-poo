@@ -232,6 +232,11 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         btFecharContaHospedagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/money.png"))); // NOI18N
         btFecharContaHospedagem.setText("Fechar Conta");
         btFecharContaHospedagem.setEnabled(false);
+        btFecharContaHospedagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btFecharContaHospedagemActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Data Saida:");
 
@@ -527,6 +532,10 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btFecharContaHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharContaHospedagemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btFecharContaHospedagemActionPerformed
+
     private boolean validaCamposObrigatorios() {
         // TODO implementar
         return paramQuarto.getText().equals("") || paramNmCliente.getText().equals("")
@@ -739,13 +748,13 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btExcluirActionPerformed
         // TODO Remove Cliente
         try {
-            if (!"".equals(paramQuarto.getText())) {
-                (new ClienteServiceImpl()).deleteCliente(Long.parseLong(paramQuarto.getText()));
+            if (!"".equals(paramCodigoHospedagem.getText()) && "".equals(paramDataSaida.getText())) {
+                (new HospedagemService()).delete(this.hospedagem);
                 JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK",
                         JOptionPane.INFORMATION_MESSAGE);
                 refreshScreen();
             } else {
-                JOptionPane.showMessageDialog(null, "Obrigatório localizar cliente", "Remoção",
+                JOptionPane.showMessageDialog(null, "Obrigatório localizar a hospedagem", "Remoção",
                         JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {

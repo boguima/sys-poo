@@ -43,4 +43,8 @@ public class Hospedagens {
     @Getter
     @Setter
     private String dataSaidaAux;
+
+    public Hospedagens(int codigoHopedagem) {
+      this.setId(id);
+    }
 }

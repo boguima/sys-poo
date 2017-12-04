@@ -7,16 +7,20 @@ package br.com.poo.controleHospedagem.viwer.telas;
 
 import br.com.poo.controleHospedagem.entity.Cliente;
 import br.com.poo.controleHospedagem.entity.Hospedagens;
+import br.com.poo.controleHospedagem.entity.ItemHospedagem;
 import br.com.poo.controleHospedagem.entity.Quarto;
 import br.com.poo.controleHospedagem.entity.Repository.QuartoRepository;
 import br.com.poo.controleHospedagem.service.ClienteServiceImpl;
 import br.com.poo.controleHospedagem.service.HospedagemService;
+import br.com.poo.controleHospedagem.service.ItemHospedagemService;
 import br.com.poo.controleHospedagem.service.QuartoService;
 import br.com.poo.controleHospedagem.util.RepositoryException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -38,7 +42,10 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     private Quarto quarto;
     @Getter
     @Setter
-    private Hospedagens hospedagem;
+    private Hospedagens hospedagem;    
+    @Getter
+    @Setter
+    private List<ItemHospedagem> lisHopesagem;
 
     /**
      * Creates new form CadastroCliente
@@ -533,7 +540,16 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btFecharContaHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharContaHospedagemActionPerformed
-        // TODO add your handling code here:
+
+        try {
+            this.lisHopesagem = (new ItemHospedagemService()).findByHopedagem(Integer.valueOf(this.hospedagem.getId()).longValue());
+            Double somaConsumoHopedagem = this.lisHopesagem.stream().mapToDouble(item -> item.getValorUnit() * item.getQtd()).sum();
+            LocalDate hoje = LocalDate.now();
+            
+            valorTotalAPagar.setText(somaConsumoHopedagem.toString());
+        } catch (RepositoryException ex) {
+            Logger.getLogger(MantemHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btFecharContaHospedagemActionPerformed
 
     private boolean validaCamposObrigatorios() {

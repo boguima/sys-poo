@@ -45,6 +45,6 @@ public class Hospedagens {
     private String dataSaidaAux;
 
     public Hospedagens(int codigoHopedagem) {
-      this.setId(id);
+      this.setId(codigoHopedagem);
     }
 }

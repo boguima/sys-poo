@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,7 +43,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     private Quarto quarto;
     @Getter
     @Setter
-    private Hospedagens hospedagem;    
+    private Hospedagens hospedagem;
     @Getter
     @Setter
     private List<ItemHospedagem> lisHopesagem;
@@ -246,6 +247,8 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         });
 
         jLabel7.setText("Data Saida:");
+
+        valorTotalAPagar.setEditable(false);
 
         jLabel8.setText("Valor Total  a pagar(R$):");
 
@@ -545,12 +548,40 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
             this.lisHopesagem = (new ItemHospedagemService()).findByHopedagem(Integer.valueOf(this.hospedagem.getId()).longValue());
             Double somaConsumoHopedagem = this.lisHopesagem.stream().mapToDouble(item -> item.getValorUnit() * item.getQtd()).sum();
             LocalDate hoje = LocalDate.now();
-            
-            valorTotalAPagar.setText(somaConsumoHopedagem.toString());
+            this.hospedagem.setDataSaidaAux(hoje.toString());
+            this.hospedagem.setDataEntradaAux(paramDataEntarda.getText());
+
+            (new HospedagemService()).update(this.hospedagem);
+            this.quarto.setSituacao("0");
+            (new QuartoService()).update(this.quarto);
+
+            this.hospedagem.setDataSaida(java.sql.Date.valueOf(hoje));
+
+            int dias = hospedagem.getDataSaida().compareTo(hospedagem.getDataEntrada());
+            Double valorDiarias = (dias == 0 ? 1 : dias) * this.quarto.getValorDia().doubleValue();
+            valorDiarias = valorDiarias + somaConsumoHopedagem;
+            bloqueiaTelaParaHospedagemFechada();
+            valorTotalAPagar.setText(valorDiarias.toString());
+            paramDataSaida.setText(hoje.toString());
+
         } catch (RepositoryException ex) {
             Logger.getLogger(MantemHospedagem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btFecharContaHospedagemActionPerformed
+
+    private void bloqueiaTelaParaHospedagemFechada() {
+        paramDataEntarda.setEditable(false);
+        paramObservacao.setEditable(false);
+        btCadastrar.setEnabled(false);
+        btExcluir.setEnabled(false);
+        btConsultar.setEnabled(false);
+        btConsultarQuarto.setEnabled(false);
+        btFecharContaHospedagem.setEnabled(false);
+        btLocalizar.setEnabled(false);
+        btLocalizarHospedagem.setEnabled(false);
+        btLocalizarQuarto.setEnabled(false);
+        codigoClienteLoc.setEditable(false);
+    }
 
     private boolean validaCamposObrigatorios() {
         // TODO implementar
@@ -630,6 +661,18 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                     setViwerDadosCliente();
                     btFecharContaHospedagem.setEnabled(true);
                     btExcluir.setEnabled(true);
+
+                    if (this.hospedagem.getDataSaida() != null) {
+                        LocalDate hoje = LocalDate.now();
+                        this.lisHopesagem = (new ItemHospedagemService()).findByHopedagem(Integer.valueOf(this.hospedagem.getId()).longValue());
+                        Double somaConsumoHopedagem = this.lisHopesagem.stream().mapToDouble(item -> item.getValorUnit() * item.getQtd()).sum();
+                        int dias = hospedagem.getDataSaida().compareTo(hospedagem.getDataEntrada());
+                        Double valorDiarias = (dias == 0 ? 1 : dias) * this.quarto.getValorDia().doubleValue();
+                        valorDiarias = valorDiarias + somaConsumoHopedagem;
+                        bloqueiaTelaParaHospedagemFechada();
+                        valorTotalAPagar.setText(valorDiarias.toString());
+                        paramDataSaida.setText(hoje.toString());
+                    }
                 } else {
                     codigo.setText("");
                     JOptionPane.showMessageDialog(null, "Hospedagem não localizado", "Atenção",
@@ -651,8 +694,8 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         dsQuarto.setText(this.quarto.getDescricao());
         paramQuarto.setText(this.quarto.getDescricao());
     }
-    
-        private void setLimparViwerDadosQuarto() {
+
+    private void setLimparViwerDadosQuarto() {
         // QUARTO
         codigoQuarto.setText("");
         dsQuarto.setText("");
@@ -666,12 +709,14 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         paramDataSaida.setText(this.hospedagem.getDataSaida() != null ? this.hospedagem.getDataSaida().toString() : "");
         paramObservacao.setText(this.hospedagem.getObservacao());
     }
-        private void setLimparViwerDadosHospedagem() {
+
+    private void setLimparViwerDadosHospedagem() {
         // HOSPEDAGEM
         paramCodigoHospedagem.setText("");
         paramDataEntarda.setText("");
         paramDataSaida.setText("");
         paramObservacao.setText("");
+        valorTotalAPagar.setText("");
     }
 
     private void setViwerDadosCliente() {
@@ -680,7 +725,8 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         nomeCliente.setText(this.cliente.getNomeCliente());
         paramNmCliente.setText(this.cliente.getNomeCliente());
     }
-        private void setLimparViwerDadosCliente() {
+
+    private void setLimparViwerDadosCliente() {
         // CLIENTE
         codigoClienteLoc.setText("");
         nomeCliente.setText("");
@@ -724,7 +770,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                         setEntityHospedagem(formatter);
                         this.hospedagem.setStCheckout("0");
-                        
+
                         Quarto quartoAux = (new HospedagemService()).findOne(new Long(this.hospedagem.getId())).getQuarto();
                         if (quartoAux != null) {
                             if (!quartoAux.getId().equals(this.hospedagem.getQuarto().getId())) {
@@ -758,7 +804,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
 
         this.hospedagem.setDataEntradaAux(paramDataEntarda.getText());
 
-        this.hospedagem.setObservacao(paramObservacao.getText());        
+        this.hospedagem.setObservacao(paramObservacao.getText());
     }
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btExcluirActionPerformed
@@ -798,7 +844,9 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         btCadastrar.setEnabled(false);
         btExcluir.setEnabled(false);
         btFecharContaHospedagem.setEnabled(false);
-                
+        btLocalizar.setEnabled(true);
+        btLocalizarHospedagem.setEnabled(true);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

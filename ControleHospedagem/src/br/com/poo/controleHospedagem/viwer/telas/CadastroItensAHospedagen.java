@@ -5,16 +5,32 @@
  */
 package br.com.poo.controleHospedagem.viwer.telas;
 
-
 import br.com.poo.controleHospedagem.entity.Cliente;
+import br.com.poo.controleHospedagem.entity.Hospedagens;
+import br.com.poo.controleHospedagem.entity.ItemHospedagem;
 import br.com.poo.controleHospedagem.service.ClienteServiceImpl;
+import br.com.poo.controleHospedagem.service.HospedagemService;
+import br.com.poo.controleHospedagem.service.ItemHospedagemService;
+import br.com.poo.controleHospedagem.util.RepositoryException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author Lucas
  */
 public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
+
+    @Getter
+    @Setter
+    private ItemHospedagem itemHospedagem = null;
+
+    @Getter
+    @Setter
+    private Hospedagens hospedagens = null;
 
     /**
      * Creates new form CadastroCliente
@@ -34,70 +50,56 @@ public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        nome = new javax.swing.JTextField();
+        descricaoProduto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        email = new javax.swing.JTextField();
+        qtd = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        endereco = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        uf = new javax.swing.JComboBox<>();
         btExcluir = new javax.swing.JButton();
         btCadastrar = new javax.swing.JButton();
-        cpf = new javax.swing.JFormattedTextField();
-        telefone = new javax.swing.JFormattedTextField();
         jLabel9 = new javax.swing.JLabel();
-        codigo = new javax.swing.JTextField();
+        codigoItemHospedagem = new javax.swing.JTextField();
+        codigoHospedagem = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        valorUnd = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        codigoClienteLoc = new javax.swing.JTextField();
+        codigoItemHospLoc = new javax.swing.JTextField();
         btLocalizar = new javax.swing.JButton();
         btRecarregar = new javax.swing.JButton();
-        btConsultar = new javax.swing.JButton();
+        btConsultarItemHospedagem = new javax.swing.JButton();
+        btConsultarHospedagens = new javax.swing.JButton();
+        btLocalizar1 = new javax.swing.JButton();
+        codigoItemHospLoc1 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
 
         setClosable(true);
-        setTitle("Cadastro de Cliente");
+        setTitle("Cadastro de Item Consumo");
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
 
-        jLabel1.setText("Nome:");
+        jLabel1.setText("Descrição do Produto:");
 
-        nome.addActionListener(new java.awt.event.ActionListener() {
+        descricaoProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeActionPerformed(evt);
+                descricaoProdutoActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("CPF:");
+        jLabel2.setText("Valor unitário:(R$)");
 
-        jLabel3.setText("E-mail:");
+        jLabel3.setText("QTD");
 
-        email.addActionListener(new java.awt.event.ActionListener() {
+        qtd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailActionPerformed(evt);
+                qtdActionPerformed(evt);
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel4.setText("Dados do Cliente");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel4.setText("Dados Item Consumo Hospedagem");
         jLabel4.setMaximumSize(new java.awt.Dimension(320, 44));
         jLabel4.setMinimumSize(new java.awt.Dimension(320, 44));
-
-        jLabel6.setText("Endereço:");
-
-        jLabel7.setText("Telefone:");
-
-        jLabel8.setText("UF:");
-
-        uf.setEditable(true);
-        uf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC\t ", "AL\t ", "AP\t ", "AM\t ", "BA\t ", "CE\t ", "DF\t ", "ES\t ", "GO\t ", "MA\t ", "MT\t ", "MS\t ", "MG\t ", "PA\t ", "PB\t ", "PR\t ", "PE\t ", "PI\t ", "RJ\t ", "RN\t ", "RS\t ", "RO\t ", "RR\t ", "SC\t ", "SP\t ", "SE\t ", "TO" }));
-        uf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ufActionPerformed(evt);
-            }
-        });
 
         btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/group_delete.png"))); // NOI18N
         btExcluir.setText("Excluir");
@@ -110,32 +112,33 @@ public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
 
         btCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/group_edit.png"))); // NOI18N
         btCadastrar.setText("Cadastrar/Editar");
+        btCadastrar.setEnabled(false);
         btCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCadastrarActionPerformed(evt);
             }
         });
 
-        try {
-            cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        cpf.addActionListener(new java.awt.event.ActionListener() {
+        jLabel9.setText("Código Item:");
+
+        codigoItemHospedagem.setEditable(false);
+        codigoItemHospedagem.setEnabled(false);
+        codigoItemHospedagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cpfActionPerformed(evt);
+                codigoItemHospedagemActionPerformed(evt);
             }
         });
 
-        try {
-            telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        codigoHospedagem.setEditable(false);
+        codigoHospedagem.setEnabled(false);
 
-        jLabel9.setText("Código:");
+        jLabel10.setText("Código Hospedagem:");
 
-        codigo.setEnabled(false);
+        valorUnd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                valorUndActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -145,87 +148,81 @@ public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(endereco)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(173, 173, 173)
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(uf, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btExcluir)
-                                        .addGap(53, 53, 53)
-                                        .addComponent(btCadastrar)))
-                                .addGap(0, 20, Short.MAX_VALUE)))
-                        .addGap(71, 71, 71))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(descricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(26, 26, 26)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(qtd, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(valorUnd, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(codigoHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(71, 71, 71))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(btExcluir)
+                        .addGap(53, 53, 53)
+                        .addComponent(btCadastrar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(codigoItemHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(4, 4, 4)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                    .addComponent(codigoItemHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(codigoHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(descricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(qtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(endereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(uf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64)
+                    .addComponent(valorUnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btExcluir)
                     .addComponent(btCadastrar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Código do Cliente:");
+        jLabel5.setText("Código Item:");
 
-        codigoClienteLoc.setToolTipText("Digite o Código");
+        codigoItemHospLoc.setToolTipText("Digite o Código");
 
         btLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/connect.png"))); // NOI18N
         btLocalizar.setText("Localizar");
@@ -243,13 +240,34 @@ public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
             }
         });
 
-        btConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/database.png"))); // NOI18N
-        btConsultar.setText("Listar Clientes");
-        btConsultar.addActionListener(new java.awt.event.ActionListener() {
+        btConsultarItemHospedagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/database.png"))); // NOI18N
+        btConsultarItemHospedagem.setText("Listar Itens Consumo");
+        btConsultarItemHospedagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btConsultarActionPerformed(evt);
+                btConsultarItemHospedagemActionPerformed(evt);
             }
         });
+
+        btConsultarHospedagens.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/database.png"))); // NOI18N
+        btConsultarHospedagens.setText("Listar Hospedagens");
+        btConsultarHospedagens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConsultarHospedagensActionPerformed(evt);
+            }
+        });
+
+        btLocalizar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/connect.png"))); // NOI18N
+        btLocalizar1.setText("Localizar");
+        btLocalizar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLocalizar1ActionPerformed(evt);
+            }
+        });
+
+        codigoItemHospLoc1.setToolTipText("Digite o Código");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel11.setText("Código Hospedagem:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -257,18 +275,30 @@ public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(codigoClienteLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(btLocalizar)
-                .addContainerGap(232, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btConsultar)
-                .addGap(18, 18, 18)
-                .addComponent(btRecarregar)
-                .addGap(23, 23, 23))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btRecarregar))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(codigoItemHospLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(btLocalizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btConsultarItemHospedagem))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(codigoItemHospLoc1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(btLocalizar1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btConsultarHospedagens, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 62, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,13 +306,18 @@ public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(codigoClienteLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btLocalizar))
+                    .addComponent(codigoItemHospLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btLocalizar)
+                    .addComponent(btConsultarItemHospedagem))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btRecarregar)
-                    .addComponent(btConsultar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel11)
+                    .addComponent(codigoItemHospLoc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btLocalizar1)
+                    .addComponent(btConsultarHospedagens))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(btRecarregar)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -296,159 +331,211 @@ public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeActionPerformed
+    private void descricaoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descricaoProdutoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nomeActionPerformed
-
-    private void ufActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ufActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ufActionPerformed
+    }//GEN-LAST:event_descricaoProdutoActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         // TODO Remove Cliente
-try {
-            if (!"".equals(codigo.getText())) {
-                (new ClienteServiceImpl()).deleteCliente(Long.parseLong(codigo.getText()));
-                JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK", JOptionPane.INFORMATION_MESSAGE); 
+        try {
+            if (!"".equals(codigoItemHospedagem.getText())) {
+                (new ItemHospedagemService()).delete(Long.parseLong(codigoItemHospedagem.getText()));
+                JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK", JOptionPane.INFORMATION_MESSAGE);
                 refreshScreen();
             } else {
-                JOptionPane.showMessageDialog(null, "Obrigatório localizar cliente","Remoção",  JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Obrigatório localizar cliente", "Remoção", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Houve um erro ao remover o cliente","Remoção",  JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Houve um erro ao remover o cliente", "Remoção", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btExcluirActionPerformed
 
-    private void cpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cpfActionPerformed
-
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         // TODO Metodo Para Cadastrar e Atualizar CLiente
-        try{
-        if (codigo.getText().equals("")) {
-            try{
-            if (validaCamposObrigatorios()) {
-                JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção",  JOptionPane.ERROR_MESSAGE);
-                codigoClienteLoc.setEnabled(false);
-                codigoClienteLoc.setText("");
-                btLocalizar.setEnabled(false);
+        try {
+            if (("").equals(codigoItemHospedagem.getText())) {
+                try {
+                    if (validaCamposObrigatorios()) {
+                        JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção", JOptionPane.ERROR_MESSAGE);
+                        codigoItemHospLoc.setEnabled(false);
+                        codigoItemHospLoc.setText("");
+                        btLocalizar.setEnabled(false);
+                    } else {
+                        this.itemHospedagem = new ItemHospedagem();
+                         this.itemHospedagem.setHospedagem(this.hospedagens);
+                        this.itemHospedagem.setProduto(descricaoProduto.getText());
+                        this.itemHospedagem.setQtd(Integer.parseInt(qtd.getText()));
+                        this.itemHospedagem.setValorUnit(Double.parseDouble(valorUnd.getText()));
+                        (new ItemHospedagemService()).inserir(this.itemHospedagem);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Houve um erro no Cadastro", "Cadastro", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-            Cliente cliente = new Cliente(null, nome.getText(), endereco.getText(), (String) uf.getSelectedItem(), telefone.getText(), cpf.getText(), email.getText());
-    	
-            (new ClienteServiceImpl()).novoCliente(cliente);
+                try {
+                    if (validaCamposObrigatorios()) {
+                        JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção", JOptionPane.ERROR_MESSAGE);
+                        codigoItemHospLoc.setEnabled(false);
+                        codigoItemHospLoc.setText("");
+                        btLocalizar.setEnabled(false);
+                    } else {
+                        this.itemHospedagem.setHospedagem(this.hospedagens);
+                        this.itemHospedagem.setProduto(descricaoProduto.getText());
+                        this.itemHospedagem.setQtd(Integer.parseInt(qtd.getText()));
+                        this.itemHospedagem.setValorUnit(Double.parseDouble(valorUnd.getText()));
+                        (new ItemHospedagemService()).update(this.itemHospedagem);
+                    }
+                    //JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);                
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Houve um erro na alteração", "Alteração", JOptionPane.ERROR_MESSAGE);
+                }
             }
-            } catch (Exception e) {
-                 JOptionPane.showMessageDialog(null,"Houve um erro no Cadastro","Cadastro",JOptionPane.ERROR_MESSAGE);
-             }
-        } else {
-            try{
-            if (validaCamposObrigatorios()) {
-                JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção",  JOptionPane.ERROR_MESSAGE);
-                codigoClienteLoc.setEnabled(false);
-                codigoClienteLoc.setText("");
-                btLocalizar.setEnabled(false);
-            } else {
-            (new ClienteServiceImpl()).update(new Cliente(Long.parseLong(codigo.getText()), nome.getText(), endereco.getText(), (String) uf.getSelectedItem(), telefone.getText(), cpf.getText(), email.getText()));            
-            }            
-            //JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);                
-             } catch (Exception e) {
-                 JOptionPane.showMessageDialog(null,"Houve um erro na alteração","Alteração",JOptionPane.ERROR_MESSAGE);
-             }
-        }
-        JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","OK",JOptionPane.INFORMATION_MESSAGE); 
-        refreshScreen();
+            JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK", JOptionPane.INFORMATION_MESSAGE);
+            refreshScreen();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Houve um erro","Atenção",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Houve um erro", "Atenção", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
     private boolean validaCamposObrigatorios() {
-        return nome.getText().equals("") || endereco.getText().equals("") || ((String) uf.getSelectedItem()).equals("") || telefone.getText().equals("") || cpf.getText().equals("") || email.getText().equals("");
+        return codigoHospedagem.getText().equals("") || descricaoProduto.getText().equals("") ||  qtd.getText().equals("") || valorUnd.getText().equals("");
     }
 
-    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
+    private void qtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qtdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_emailActionPerformed
+    }//GEN-LAST:event_qtdActionPerformed
 
     private void btLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocalizarActionPerformed
-        if (!codigoClienteLoc.getText().equals("")) {
-        Cliente cliente = (new ClienteServiceImpl()).findOne(Long.parseLong(codigoClienteLoc.getText()));
-            if (cliente != null) {
-                codigo.setText(cliente.getId().toString());
-                nome.setText(cliente.getNomeCliente());
-                email.setText(cliente.getEMail());
-                cpf.setText(cliente.getCpf());
-                endereco.setText(cliente.getEndereco());
-                telefone.setText(cliente.getTelefone());
-                uf.setSelectedItem(cliente.getUf());
-                btExcluir.setEnabled(true);                
-            } else {
-            codigoClienteLoc.setText("");
-            JOptionPane.showMessageDialog(null, "Cliente não localizado", "Atenção",  JOptionPane.ERROR_MESSAGE);
-            }            
+        if (!codigoItemHospLoc.getText().equals("")) {
+
+            try {
+                itemHospedagem = (new ItemHospedagemService()).findOne(Long.parseLong(codigoItemHospLoc.getText()));
+                if (itemHospedagem != null) {
+                    codigoItemHospedagem.setText(itemHospedagem.getId().toString());
+                    codigoHospedagem.setText(String.valueOf(this.itemHospedagem.getHospedagem().getId()));
+                    descricaoProduto.setText(itemHospedagem.getProduto());
+                    qtd.setText(String.valueOf(itemHospedagem.getQtd()));
+                    valorUnd.setText(this.itemHospedagem.getValorUnit().toString());
+                    codigoItemHospLoc1.setEditable(true);
+                    btExcluir.setEnabled(true);
+                    btCadastrar.setEnabled(true);
+
+                } else {
+                    codigoItemHospLoc.setText("");
+                    JOptionPane.showMessageDialog(null, "Item de Consumo não localizado", "Atenção", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (RepositoryException ex) {
+                Logger.getLogger(CadastroItensAHospedagen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         } else {
-            JOptionPane.showMessageDialog(null, "Informar Código do Cliente", "Atenção",  JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Informar Código do Item", "Atenção", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_btLocalizarActionPerformed
 
-    private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        ListaClientes form = new ListaClientes();
-        form.setVisible(true);
-    }//GEN-LAST:event_btConsultarActionPerformed
+    private void btConsultarItemHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarItemHospedagemActionPerformed
+        ListaItemByHospedagem form;
+        try {
+            form = new ListaItemByHospedagem();
+            form.setVisible(true);
+        } catch (RepositoryException ex) {
+            Logger.getLogger(CadastroItensAHospedagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btConsultarItemHospedagemActionPerformed
 
     private void btRecarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRecarregarActionPerformed
-    refreshScreen();
+        refreshScreen();
     }//GEN-LAST:event_btRecarregarActionPerformed
 
-    private void refreshScreen() {
-        codigoClienteLoc.setText("");
-        codigo.setText("");
-        nome.setText("");
-        email.setText("");
-        cpf.setText("");
-        endereco.setText("");
-        telefone.setText("");
+    private void valorUndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorUndActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_valorUndActionPerformed
+
+    private void btConsultarHospedagensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarHospedagensActionPerformed
+        ListaHospedagem form;
+        try {
+            form = new ListaHospedagem();
+            form.setVisible(true);
+        } catch (RepositoryException ex) {
+            Logger.getLogger(CadastroItensAHospedagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btConsultarHospedagensActionPerformed
+
+    private void btLocalizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocalizar1ActionPerformed
         
+                
+        if (!codigoItemHospLoc1.getText().equals("")) {
+
+            try {
+                this.hospedagens = new HospedagemService().findOne(Long.parseLong(codigoItemHospLoc1.getText()));
+                if (this.hospedagens != null) {
+                    codigoHospedagem.setText(String.valueOf(this.hospedagens.getId()));
+                    btCadastrar.setEnabled(true);
+
+                } else {
+                    codigoItemHospLoc1.setText("");
+                    JOptionPane.showMessageDialog(null, "Hospedagem não localizada", "Atenção", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (RepositoryException ex) {
+                Logger.getLogger(CadastroItensAHospedagen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Informar Código da Hospedagem", "Atenção", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btLocalizar1ActionPerformed
+
+    private void codigoItemHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoItemHospedagemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codigoItemHospedagemActionPerformed
+
+    private void refreshScreen() {
+        codigoItemHospLoc.setText("");
+        codigoItemHospedagem.setText("");
+        descricaoProduto.setText("");
+        qtd.setText("");
+        valorUnd.setText("");
+
         btLocalizar.setEnabled(true);
         btExcluir.setEnabled(false);
         btCadastrar.setEnabled(true);
-        codigoClienteLoc.setEnabled(true);
+        codigoItemHospLoc.setEnabled(true);
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastrar;
-    private javax.swing.JButton btConsultar;
+    private javax.swing.JButton btConsultarHospedagens;
+    private javax.swing.JButton btConsultarItemHospedagem;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btLocalizar;
+    private javax.swing.JButton btLocalizar1;
     private javax.swing.JButton btRecarregar;
-    private javax.swing.JTextField codigo;
-    private javax.swing.JTextField codigoClienteLoc;
-    private javax.swing.JFormattedTextField cpf;
-    private javax.swing.JTextField email;
-    private javax.swing.JTextField endereco;
+    private javax.swing.JTextField codigoHospedagem;
+    private javax.swing.JTextField codigoItemHospLoc;
+    private javax.swing.JTextField codigoItemHospLoc1;
+    private javax.swing.JTextField codigoItemHospedagem;
+    private javax.swing.JTextField descricaoProduto;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField nome;
-    private javax.swing.JFormattedTextField telefone;
-    private javax.swing.JComboBox<String> uf;
+    private javax.swing.JTextField qtd;
+    private javax.swing.JTextField valorUnd;
     // End of variables declaration//GEN-END:variables
 }

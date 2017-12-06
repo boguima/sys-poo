@@ -213,7 +213,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="C&#xf3;digo do Usuario:"/>
+            <Property name="text" type="java.lang.String" value="Nome Usuario:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="codigoUsuarioLoc">

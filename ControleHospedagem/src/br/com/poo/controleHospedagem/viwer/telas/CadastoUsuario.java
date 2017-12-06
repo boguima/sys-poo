@@ -145,7 +145,7 @@ public class CadastoUsuario extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Código do Usuario:");
+        jLabel5.setText("Nome Usuario:");
 
         codigoUsuarioLoc.setToolTipText("Digite o Código");
 
@@ -304,6 +304,8 @@ public class CadastoUsuario extends javax.swing.JInternalFrame {
             }
             if (usuario != null) {
                 codigo.setText(usuario.getId().toString());
+                jTextField1.setText(usuario.getUsuario());
+                jTextField2.setText(usuario.getSenha());
                 btExcluir.setEnabled(true);
             } else {
                 codigoUsuarioLoc.setText("");

@@ -14,167 +14,162 @@ import java.util.List;
 
 public class ClienteRepository {
 
-	private ConnectionRepository connection;
-	
-	private Connection conn;
-	
-	private PreparedStatement stmt;
-        
-        private static final String INSERT = "insert into cliente (cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email) values ( ? , ? , ? , ? , ? , ? )";
-        
-        private static final String UPDATE = "update cliente SET cli_nome = ?, cli_endereco = ?, cli_uf = ?, cli_telefone = ?, cli_cpf = ?, cli_email = ? where cli_id = ?";
-	
-	public ClienteRepository () {
-		connection = new ConnectionRepository();		
-	}
+    private ConnectionRepository connection;
 
-	public void inserir(Cliente cliente) throws RepositoryException {
-		try {
-			if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
-				connection.beginTransaction();
-			}			
-			
-			inserir(cliente, INSERT, "insert", this.connection);
-			
-			connection.endTransaction();			
-		} catch (SQLException e) {
-			throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
-		} finally {
-			connection.releaseAll(stmt, conn);
-		}
-	}
+    private Connection conn;
 
-	public void inserir(Cliente cliente, String sql, String op,ConnectionRepository connection) throws SQLException {
-		int i=0;
-		
-		this.conn = connection.getConnectionFromContext();
-		
-		stmt = conn.prepareStatement(sql
-				, PreparedStatement.RETURN_GENERATED_KEYS);					
-		stmt.setString(++i, cliente.getNomeCliente());
-		stmt.setString(++i, cliente.getEndereco());
-		stmt.setString(++i, cliente.getUf());
-		stmt.setString(++i, cliente.getTelefone());
-		stmt.setString(++i, cliente.getCpf() );
-		stmt.setString(++i, cliente.getEMail());
-                if ("update".equals(op)) {
-                stmt.setLong(++i, cliente.getId());
+    private PreparedStatement stmt;
+
+    private static final String INSERT = "insert into cliente (cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email) values ( ? , ? , ? , ? , ? , ? )";
+
+    private static final String UPDATE = "update cliente SET cli_nome = ?, cli_endereco = ?, cli_uf = ?, cli_telefone = ?, cli_cpf = ?, cli_email = ? where cli_id = ?";
+
+    public ClienteRepository() {
+        connection = new ConnectionRepository();
+    }
+
+    public void inserir(Cliente cliente) throws RepositoryException {
+        try {
+            if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+                connection.beginTransaction();
             }
-		stmt.executeUpdate();
-	}
-        
-        public Cliente findOne(Long codigo) throws RepositoryException{
-            Cliente entity = null;
-            try {
-                if (this.connection.getConnectionContext() == null || this.connection.getConnectionContext().isClosed()) {
-		    this.connection.beginTransaction();
-                }        
-		
-		entity = reflectionFindOne(codigo, entity, this.connection);
-                
-                this.connection.endTransaction();
-              
-                
-            } catch (SQLException e) {
-                throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
-            } finally {
-			this.connection.releaseAll(stmt, conn);
-		}
-            return entity;        
-        }
 
-    public Cliente reflectionFindOne(Long codigo, Cliente entity, ConnectionRepository connection) throws SQLException {
+            inserir(cliente, INSERT, "insert", this.connection);
+
+            connection.endTransaction();
+        } catch (SQLException e) {
+            throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+        } finally {
+            connection.releaseAll(stmt, conn);
+        }
+    }
+
+    public void inserir(Cliente cliente, String sql, String op, ConnectionRepository connection) throws SQLException {
+        int i = 0;
+
         this.conn = connection.getConnectionFromContext();
-        
-        stmt = this.conn.prepareStatement("select cli_id, cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email from cliente where cli_id = "+codigo.toString());
-        ResultSet rs =  stmt.executeQuery();
-        while (rs.next()) {
-            entity = new Cliente(rs.getLong("cli_id")
-                    , rs.getString("cli_nome")
-                    , rs.getString("cli_endereco")
-                    , rs.getString("cli_uf")
-                    , rs.getString("cli_telefone")
-                    , rs.getString("cli_cpf")
-                    , rs.getString("cli_email"));
+
+        stmt = conn.prepareStatement(sql,
+                 PreparedStatement.RETURN_GENERATED_KEYS);
+        stmt.setString(++i, cliente.getNomeCliente());
+        stmt.setString(++i, cliente.getEndereco());
+        stmt.setString(++i, cliente.getUf());
+        stmt.setString(++i, cliente.getTelefone());
+        stmt.setString(++i, cliente.getCpf());
+        stmt.setString(++i, cliente.getEMail());
+        if ("update".equals(op)) {
+            stmt.setLong(++i, cliente.getId());
+        }
+        stmt.executeUpdate();
+    }
+
+    public Cliente findOne(Long codigo) throws RepositoryException {
+        Cliente entity = null;
+        try {
+            if (this.connection.getConnectionContext() == null || this.connection.getConnectionContext().isClosed()) {
+                this.connection.beginTransaction();
+            }
+
+            entity = reflectionFindOne(codigo, entity, this.connection);
+
+            this.connection.endTransaction();
+
+        } catch (SQLException e) {
+            throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+        } finally {
+            this.connection.releaseAll(stmt, conn);
         }
         return entity;
     }
-        
-        public List<Cliente> findAll( )throws RepositoryException{
-            List<Cliente> listEntity = new ArrayList<>();
-            try {
-                if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
-		    connection.beginTransaction();
-                }        
-		
-		this.conn = connection.getConnectionFromContext();
-		
-		stmt = conn.prepareStatement("select cli_id, cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email from cliente");	
-			
-		
-                
-                ResultSet rs =  stmt.executeQuery();
-                                
-                while (rs.next()) {                    
-                    listEntity.add(new Cliente(rs.getLong("cli_id")
-                            , rs.getString("cli_nome")
-                            , rs.getString("cli_endereco")
-                            , rs.getString("cli_uf")
-                            , rs.getString("cli_telefone")
-                            , rs.getString("cli_cpf")
-                            , rs.getString("cli_email")));
-                }
-                
-                connection.endTransaction();
-              
-                
-            } catch (SQLException e) {
-                throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
-            } finally {
-			connection.releaseAll(stmt, conn);
-		}
-            return listEntity; 
+
+    public Cliente reflectionFindOne(Long codigo, Cliente entity, ConnectionRepository connection) throws SQLException {
+        this.conn = connection.getConnectionFromContext();
+
+        stmt = this.conn.prepareStatement("select cli_id, cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email from cliente where cli_id = " + codigo.toString());
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            entity = new Cliente(rs.getLong("cli_id"),
+                     rs.getString("cli_nome"),
+                     rs.getString("cli_endereco"),
+                     rs.getString("cli_uf"),
+                     rs.getString("cli_telefone"),
+                     rs.getString("cli_cpf"),
+                     rs.getString("cli_email"));
         }
-        
-        
-        	public void update(Cliente cliente) throws RepositoryException {
-		try {
-			if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
-				connection.beginTransaction();
-			}			
-			
-			inserir(cliente, UPDATE, "update", this.connection);
-			
-			connection.endTransaction();			
-		} catch (SQLException e) {
-			throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
-		} finally {
-			connection.releaseAll(stmt, conn);
-		}
-	}
-        public void delete(Long id) throws RepositoryException {
-		try {
-			if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
-				connection.beginTransaction();
-			}			
-			
-                int i=0;
-		
-		this.conn = connection.getConnectionFromContext();
-		
-		stmt = conn.prepareStatement("delete from cliente where cli_id = ?"
-				, PreparedStatement.RETURN_GENERATED_KEYS);
-                stmt.setLong(++i, id);
-            
-		stmt.executeUpdate();
-			
-			
-			connection.endTransaction();			
-		} catch (SQLException e) {
-			throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
-		} finally {
-			connection.releaseAll(stmt, conn);
-		}
-	}        
+        return entity;
+    }
+
+    public List<Cliente> findAll() throws RepositoryException {
+        List<Cliente> listEntity = new ArrayList<>();
+        try {
+            if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+                connection.beginTransaction();
+            }
+
+            this.conn = connection.getConnectionFromContext();
+
+            stmt = conn.prepareStatement("select cli_id, cli_nome, cli_endereco, cli_uf, cli_telefone, cli_cpf, cli_email from cliente");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                listEntity.add(new Cliente(rs.getLong("cli_id"),
+                         rs.getString("cli_nome"),
+                         rs.getString("cli_endereco"),
+                         rs.getString("cli_uf"),
+                         rs.getString("cli_telefone"),
+                         rs.getString("cli_cpf"),
+                         rs.getString("cli_email")));
+            }
+
+            connection.endTransaction();
+
+        } catch (SQLException e) {
+            throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+        } finally {
+            connection.releaseAll(stmt, conn);
+        }
+        return listEntity;
+    }
+
+    public void update(Cliente cliente) throws RepositoryException {
+        try {
+            if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+                connection.beginTransaction();
+            }
+
+            inserir(cliente, UPDATE, "update", this.connection);
+
+            connection.endTransaction();
+        } catch (SQLException e) {
+            throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+        } finally {
+            connection.releaseAll(stmt, conn);
+        }
+    }
+
+    public void delete(Long id) throws RepositoryException {
+        try {
+            if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+                connection.beginTransaction();
+            }
+
+            int i = 0;
+
+            this.conn = connection.getConnectionFromContext();
+
+            stmt = conn.prepareStatement("delete from cliente where cli_id = ?",
+                     PreparedStatement.RETURN_GENERATED_KEYS);
+            stmt.setLong(++i, id);
+
+            stmt.executeUpdate();
+
+            connection.endTransaction();
+        } catch (SQLException e) {
+            throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+        } finally {
+            connection.releaseAll(stmt, conn);
+        }
+    }
 
 }

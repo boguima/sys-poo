@@ -81,5 +81,41 @@ public class ItemHospedagenRepository {
             return listEntity; 
 
     }
+    
+        public List<ItemHospedagem> findAll() throws RepositoryException {
+            List<ItemHospedagem> listEntity = new ArrayList<>();
+            try {
+                if (connection.getConnectionContext() == null || connection.getConnectionContext().isClosed()) {
+		    connection.beginTransaction();
+                }        
+		
+		this.conn = connection.getConnectionFromContext();
+		
+		stmt = conn.prepareStatement("SELECT itemhosp_id, itemhosp_dsproduto, itemhosp_qtdproduto, itemhosp_vldproduto, itemhosp_idhosp FROM item_hospedagens ");	
+			
+		
+                
+                ResultSet rs =  stmt.executeQuery();
+                                
+                while (rs.next()) {                    
+                    listEntity.add(new ItemHospedagem(
+                            rs.getLong("itemhosp_id"), 
+                            rs.getString("itemhosp_dsproduto"), 
+                            rs.getInt("itemhosp_qtdproduto"), 
+                            rs.getDouble("itemhosp_vldproduto"), 
+                            rs.getInt("itemhosp_idhosp")));
+                }
+                
+                connection.endTransaction();
+              
+                
+            } catch (SQLException e) {
+                throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+            } finally {
+			connection.releaseAll(stmt, conn);
+		}
+            return listEntity; 
+
+    }
 
 }

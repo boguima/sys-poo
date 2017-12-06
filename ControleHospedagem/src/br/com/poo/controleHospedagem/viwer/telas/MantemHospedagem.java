@@ -89,6 +89,8 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         valorTotalAPagar = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        btConsultarConsumo = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btRecarregar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -106,6 +108,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         codigo = new javax.swing.JTextField();
         btLocalizarHospedagem = new javax.swing.JButton();
+        btConsultarConsumo1 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Gestão de Hospedagem");
@@ -252,25 +255,38 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Valor Total  a pagar(R$):");
 
+        btConsultarConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/database.png"))); // NOI18N
+        btConsultarConsumo.setText("Listar Consumo");
+        btConsultarConsumo.setEnabled(false);
+        btConsultarConsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConsultarConsumoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paramDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btFecharContaHospedagem)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(valorTotalAPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(paramDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btFecharContaHospedagem)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(valorTotalAPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(btConsultarConsumo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
@@ -282,8 +298,12 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                 .addComponent(valorTotalAPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(btFecharContaHospedagem)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btConsultarConsumo)
+                .addGap(49, 49, 49))
         );
+
+        jLabel14.setText("YYYY-MM-DD");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -298,7 +318,9 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel6)
                                 .addGap(10, 10, 10)
                                 .addComponent(paramDataEntarda, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(214, 214, 214))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(77, 77, 77)
                                 .addComponent(btExcluir)
@@ -326,12 +348,13 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(paramDataEntarda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel14))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel1))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btExcluir)
@@ -392,7 +415,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         });
 
         btConsultarQuarto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/database.png"))); // NOI18N
-        btConsultarQuarto.setText("Listar Clientes");
+        btConsultarQuarto.setText("Listar Quartos");
         btConsultarQuarto.setEnabled(false);
         btConsultarQuarto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -448,7 +471,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                     .addComponent(btConsultarQuarto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dsQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(0, 102, 102));
@@ -471,6 +494,15 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
             }
         });
 
+        btConsultarConsumo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/database.png"))); // NOI18N
+        btConsultarConsumo1.setText("Listar Hospedagens");
+        btConsultarConsumo1.setActionCommand("Listar Hospedagens");
+        btConsultarConsumo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConsultarConsumo1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -485,6 +517,9 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btLocalizarHospedagem)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btConsultarConsumo1))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -495,6 +530,8 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btLocalizarHospedagem))
+                .addGap(18, 18, 18)
+                .addComponent(btConsultarConsumo1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -569,6 +606,26 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btFecharContaHospedagemActionPerformed
 
+    private void btConsultarConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarConsumoActionPerformed
+        try {
+            ListaItemByHospedagem form = new ListaItemByHospedagem(this.hospedagem.getId());
+            form.setVisible(true);
+        } catch (RepositoryException ex) {
+            Logger.getLogger(MantemHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btConsultarConsumoActionPerformed
+
+    private void btConsultarConsumo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarConsumo1ActionPerformed
+        ListaHospedagem form;
+        try {
+            form = new ListaHospedagem();
+            form.setVisible(true);
+        } catch (RepositoryException ex) {
+            Logger.getLogger(MantemHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btConsultarConsumo1ActionPerformed
+
     private void bloqueiaTelaParaHospedagemFechada() {
         paramDataEntarda.setEditable(false);
         paramObservacao.setEditable(false);
@@ -639,7 +696,13 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     }// GEN-LAST:event_btLocalizarQuartoActionPerformed
 
     private void btConsultarQuartoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btConsultarQuartoActionPerformed
-        // TODO add your handling code here:
+        ListaQuarto form = null;
+        try {
+            form = new ListaQuarto();
+        } catch (RepositoryException ex) {
+            Logger.getLogger(CadastroQuarto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        form.setVisible(true);
     }// GEN-LAST:event_btConsultarQuartoActionPerformed
 
     private void codigoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_codigoActionPerformed
@@ -673,6 +736,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                         valorTotalAPagar.setText(valorDiarias.toString());
                         paramDataSaida.setText(hoje.toString());
                     }
+                    btConsultarConsumo.setEnabled(true);
                 } else {
                     codigo.setText("");
                     JOptionPane.showMessageDialog(null, "Hospedagem não localizado", "Atenção",
@@ -756,6 +820,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                         this.hospedagem.setStCheckout("0");
 
                         (new HospedagemService()).inserir(this.hospedagem);
+                        btConsultarConsumo.setEnabled(true);
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Houve um erro no Cadastro", "Cadastro",
@@ -781,6 +846,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
 
                         this.hospedagem.setDataSaidaAux("");
                         (new HospedagemService()).update(this.hospedagem);
+                        btConsultarConsumo.setEnabled(true);
                     }
                     // JOptionPane.showMessageDialog(null,"Operação Concluída com
                     // Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);
@@ -846,12 +912,15 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         btFecharContaHospedagem.setEnabled(false);
         btLocalizar.setEnabled(true);
         btLocalizarHospedagem.setEnabled(true);
+        btConsultarConsumo.setEnabled(false);
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastrar;
     private javax.swing.JButton btConsultar;
+    private javax.swing.JButton btConsultarConsumo;
+    private javax.swing.JButton btConsultarConsumo1;
     private javax.swing.JButton btConsultarQuarto;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btFecharContaHospedagem;
@@ -868,6 +937,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

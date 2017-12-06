@@ -11,6 +11,8 @@ import br.com.poo.controleHospedagem.entity.Quarto;
 import br.com.poo.controleHospedagem.util.ConnectionRepository;
 import br.com.poo.controleHospedagem.util.RepositoryException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HospedagensRepository {
 
@@ -23,7 +25,7 @@ public class HospedagensRepository {
     public HospedagensRepository() {
         connection = new ConnectionRepository();
     }
-    
+
     private static final String UPDATEQUARTO = "update quartos_hospedagens  SET quahosp_ds = ?, quahosp_st = ?, quahosp_vl= ? where quahosp_id= ?";
 
     public void inserir(Hospedagens hospedagen) throws RepositoryException {
@@ -135,9 +137,9 @@ public class HospedagensRepository {
             this.conn = connection.getConnectionFromContext();
 
             stmt = conn.prepareStatement("delete from hospedagens where hosp_id = ?",
-                     PreparedStatement.RETURN_GENERATED_KEYS);
+                    PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setLong(++i, entity.getId());
-            
+
             if (entity.getQuarto() != null) {
                 entity.getQuarto().setSituacao("0");
                 (new QuartoRepository()).inserir(entity.getQuarto(), UPDATEQUARTO, "update", this.connection);
@@ -151,6 +153,54 @@ public class HospedagensRepository {
         } finally {
             connection.releaseAll(stmt, conn);
         }
+    }
+
+    public List<Hospedagens> findAll() throws RepositoryException {
+        List<Hospedagens> entityList = new ArrayList<>();
+        Hospedagens entity = null;
+        try {
+            if (this.connection.getConnectionContext() == null || this.connection.getConnectionContext().isClosed()) {
+                this.connection.beginTransaction();
+            }
+
+            this.conn = this.connection.getConnectionFromContext();
+
+            stmt = conn.prepareStatement("select hosp_id, hosp_dtentrada, hosp_dtsaida, hosp_stcheckout, hosp_idcliente, hosp_observacao, hosp_idquarto from hospedagens");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                entity = new Hospedagens(rs.getInt("hosp_id"),
+                        rs.getDate("hosp_dtentrada"),
+                        rs.getDate("hosp_dtsaida"),
+                        new Cliente(rs.getLong("hosp_idcliente")),
+                        rs.getString("hosp_stcheckout"),
+                        rs.getString("hosp_observacao"),
+                        new Quarto(rs.getLong("hosp_idquarto")),
+                        "",
+                        ""
+                );
+
+                if (entity != null && entity.getCliente() != null) {
+                    entity.setCliente((new ClienteRepository()).reflectionFindOne(entity.getCliente().getId(), entity.getCliente(), this.connection));
+
+                }
+                if (entity != null && entity.getQuarto() != null) {
+                    entity.setQuarto((new QuartoRepository()).reflectionFindOne(entity.getQuarto().getId(), entity.getQuarto(), this.connection));
+
+                }
+                entityList.add(entity);
+                
+            }
+
+            this.connection.endTransaction();
+
+        } catch (SQLException e) {
+            throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+        } finally {
+            this.connection.releaseAll(stmt, conn);
+        }
+        return entityList;
     }
 
 }

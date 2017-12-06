@@ -117,5 +117,38 @@ public class ItemHospedagenRepository {
             return listEntity; 
 
     }
+        
+     public ItemHospedagem findOne(Long codigo) throws RepositoryException {
+        ItemHospedagem entity = null;
+        try {
+            if (this.connection.getConnectionContext() == null || this.connection.getConnectionContext().isClosed()) {
+                this.connection.beginTransaction();
+            }
+
+            this.conn = this.connection.getConnectionFromContext();
+
+            stmt = conn.prepareStatement("SELECT itemhosp_id, itemhosp_dsproduto, itemhosp_qtdproduto, itemhosp_vldproduto, itemhosp_idhosp FROM item_hospedagens where itemhosp_id = " + codigo.toString());
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                entity = new ItemHospedagem(rs.getLong("itemhosp_id"), 
+                        rs.getString("itemhosp_dsproduto"), 
+                        rs.getInt("itemhosp_qtdproduto"), 
+                        rs.getDouble("itemhosp_vldproduto"), 
+                        new Hospedagens(rs.getInt("itemhosp_idhosp")));
+            }
+
+
+            this.connection.endTransaction();
+
+        } catch (SQLException e) {
+            throw new RepositoryException("N�o foi possivel realizar a transa��o", e);
+        } finally {
+            this.connection.releaseAll(stmt, conn);
+        }
+        return entity;
+    }
+
 
 }

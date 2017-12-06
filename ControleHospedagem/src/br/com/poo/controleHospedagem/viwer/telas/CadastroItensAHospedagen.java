@@ -14,12 +14,12 @@ import javax.swing.JOptionPane;
  *
  * @author Lucas
  */
-public class CadastroCliente extends javax.swing.JInternalFrame {
+public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form CadastroCliente
      */
-    public CadastroCliente() {
+    public CadastroItensAHospedagen() {
         initComponents();
     }
 

@@ -12,6 +12,7 @@ import br.com.poo.controleHospedagem.service.ClienteServiceImpl;
 import br.com.poo.controleHospedagem.service.HospedagemService;
 import br.com.poo.controleHospedagem.service.ItemHospedagemService;
 import br.com.poo.controleHospedagem.util.RepositoryException;
+import java.awt.HeadlessException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -347,8 +348,7 @@ public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
         try {
             if (!"".equals(codigoItemHospedagem.getText())) {
                 (new ItemHospedagemService()).delete(Long.parseLong(codigoItemHospedagem.getText()));
-                JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK", JOptionPane.INFORMATION_MESSAGE);
-                refreshScreen();
+                msgConfirm();
             } else {
                 JOptionPane.showMessageDialog(null, "Obrigatório localizar cliente", "Remoção", JOptionPane.ERROR_MESSAGE);
             }
@@ -369,11 +369,12 @@ public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
                         btLocalizar.setEnabled(false);
                     } else {
                         this.itemHospedagem = new ItemHospedagem();
-                         this.itemHospedagem.setHospedagem(this.hospedagens);
+                        this.itemHospedagem.setHospedagem(this.hospedagens);
                         this.itemHospedagem.setProduto(descricaoProduto.getText());
                         this.itemHospedagem.setQtd(Integer.parseInt(qtd.getText()));
                         this.itemHospedagem.setValorUnit(Double.parseDouble(valorUnd.getText()));
                         (new ItemHospedagemService()).inserir(this.itemHospedagem);
+                        msgConfirm();
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Houve um erro no Cadastro", "Cadastro", JOptionPane.ERROR_MESSAGE);
@@ -391,21 +392,26 @@ public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
                         this.itemHospedagem.setQtd(Integer.parseInt(qtd.getText()));
                         this.itemHospedagem.setValorUnit(Double.parseDouble(valorUnd.getText()));
                         (new ItemHospedagemService()).update(this.itemHospedagem);
+                        msgConfirm();
                     }
                     //JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);                
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Houve um erro na alteração", "Alteração", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK", JOptionPane.INFORMATION_MESSAGE);
-            refreshScreen();
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro", "Atenção", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
+    private void msgConfirm() throws HeadlessException {
+        JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK", JOptionPane.INFORMATION_MESSAGE);
+        refreshScreen();
+    }
+
     private boolean validaCamposObrigatorios() {
-        return codigoHospedagem.getText().equals("") || descricaoProduto.getText().equals("") ||  qtd.getText().equals("") || valorUnd.getText().equals("");
+        return codigoHospedagem.getText().equals("") || descricaoProduto.getText().equals("") || qtd.getText().equals("") || valorUnd.getText().equals("");
     }
 
     private void qtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qtdActionPerformed
@@ -471,8 +477,7 @@ public class CadastroItensAHospedagen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btConsultarHospedagensActionPerformed
 
     private void btLocalizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocalizar1ActionPerformed
-        
-                
+
         if (!codigoItemHospLoc1.getText().equals("")) {
 
             try {

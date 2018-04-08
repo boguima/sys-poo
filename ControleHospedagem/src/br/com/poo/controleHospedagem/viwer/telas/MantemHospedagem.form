@@ -742,7 +742,6 @@
                   <Image iconType="3" name="/br/com/poo/controleHospedagem/viwer/icons/iconsPNG/database.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Listar Hospedagens"/>
-                <Property name="actionCommand" type="java.lang.String" value="Listar Hospedagens"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btConsultarConsumo1ActionPerformed"/>

@@ -12,6 +12,7 @@ import br.com.poo.controleHospedagem.entity.Usuario;
 import br.com.poo.controleHospedagem.service.ClienteServiceImpl;
 import br.com.poo.controleHospedagem.service.QuartoService;
 import br.com.poo.controleHospedagem.util.RepositoryException;
+import java.awt.HeadlessException;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -255,8 +256,7 @@ public class CadastroQuarto extends javax.swing.JInternalFrame {
 try {
             if (!"".equals(codigo.getText())) {
                 (new QuartoService()).delete(Long.parseLong(codigo.getText()));
-                JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK", JOptionPane.INFORMATION_MESSAGE); 
-                refreshScreen();
+                msgConfirm();
             } else {
                 JOptionPane.showMessageDialog(null, "Obrigatório localizar quarto","Remoção",  JOptionPane.ERROR_MESSAGE);
             }
@@ -279,9 +279,10 @@ try {
                 (new QuartoService()).inserir(new Quarto(0L,jTextField1.getText(),String.valueOf(jComboBox1.getSelectedIndex()) ,BigDecimal.valueOf(Float.parseFloat(jTextField2.getText()))));
                          jTextField1.setText("");
                          jTextField2.setText("");
+                         msgConfirm();
             }
             } catch (Exception e) {
-                 JOptionPane.showMessageDialog(null,"Houve um erro no Cadastro","Cadastro",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Houve um erro no Cadastro","Cadastro",JOptionPane.ERROR_MESSAGE);                 
              }
         } else {
             try{
@@ -294,18 +295,22 @@ try {
             (new QuartoService()).update(new Quarto(Long.valueOf(codigo.getText()),jTextField1.getText(),String.valueOf(jComboBox1.getSelectedIndex()) ,BigDecimal.valueOf(Float.parseFloat(jTextField2.getText())))); 
               jTextField1.setText("");
               jTextField2.setText("");
+                        msgConfirm();
             }            
             //JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);                
              } catch (Exception e) {
                  JOptionPane.showMessageDialog(null,"Houve um erro na alteração","Alteração",JOptionPane.ERROR_MESSAGE);
              }
         }
-        JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","OK",JOptionPane.INFORMATION_MESSAGE); 
-        refreshScreen();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Houve um erro","Atenção",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
+
+    private void msgConfirm() throws HeadlessException {
+        JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","OK",JOptionPane.INFORMATION_MESSAGE);
+        refreshScreen();
+    }
 
     private boolean validaCamposObrigatorios() {
         return jTextField1.getText().equals("") || jTextField2.getText().equals("") ;

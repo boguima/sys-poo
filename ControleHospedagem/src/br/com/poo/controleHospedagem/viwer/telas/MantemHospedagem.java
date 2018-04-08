@@ -15,6 +15,7 @@ import br.com.poo.controleHospedagem.service.HospedagemService;
 import br.com.poo.controleHospedagem.service.ItemHospedagemService;
 import br.com.poo.controleHospedagem.service.QuartoService;
 import br.com.poo.controleHospedagem.util.RepositoryException;
+import java.awt.HeadlessException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -821,6 +822,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
 
                         (new HospedagemService()).inserir(this.hospedagem);
                         btConsultarConsumo.setEnabled(true);
+                        msgConfirm();
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Houve um erro no Cadastro", "Cadastro",
@@ -847,6 +849,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                         this.hospedagem.setDataSaidaAux("");
                         (new HospedagemService()).update(this.hospedagem);
                         btConsultarConsumo.setEnabled(true);
+                        msgConfirm();
                     }
                     // JOptionPane.showMessageDialog(null,"Operação Concluída com
                     // Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);
@@ -855,13 +858,16 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
-            JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK",
-                    JOptionPane.INFORMATION_MESSAGE);
-            refreshScreen();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro", "Atenção", JOptionPane.ERROR_MESSAGE);
         }
     }// GEN-LAST:event_btCadastrarActionPerformed
+
+    private void msgConfirm() throws HeadlessException {
+        JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK",
+                JOptionPane.INFORMATION_MESSAGE);
+        refreshScreen();
+    }
 
     private void setEntityHospedagem(DateFormat formatter) throws ParseException {
         this.hospedagem.setCliente(this.cliente);
@@ -878,9 +884,7 @@ public class MantemHospedagem extends javax.swing.JInternalFrame {
         try {
             if (!"".equals(paramCodigoHospedagem.getText()) && "".equals(paramDataSaida.getText())) {
                 (new HospedagemService()).delete(this.hospedagem);
-                JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK",
-                        JOptionPane.INFORMATION_MESSAGE);
-                refreshScreen();
+                msgConfirm();
             } else {
                 JOptionPane.showMessageDialog(null, "Obrigatório localizar a hospedagem", "Remoção",
                         JOptionPane.ERROR_MESSAGE);

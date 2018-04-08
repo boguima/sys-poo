@@ -12,6 +12,7 @@ import br.com.poo.controleHospedagem.service.UsuarioService;
 import br.com.poo.controleHospedagem.util.RepositoryException;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.HeadlessException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -228,72 +229,76 @@ public class CadastoUsuario extends javax.swing.JInternalFrame {
         try {
             if (!"".equals(codigo.getText())) {
                 (new UsuarioService()).delete(Long.parseLong(codigo.getText()));
-                JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK", JOptionPane.INFORMATION_MESSAGE);
-                refreshScreen();
+                msgConfirm();
             } else {
-                JOptionPane.showMessageDialog(null, "Obrigatório localizar Usuário","Remoção",  JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Obrigatório localizar Usuário", "Remoção", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Houve um erro ao remover o Usuário","Remoção",  JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Houve um erro ao remover o Usuário", "Remoção", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btExcluirActionPerformed
 
-        private void refreshScreen() {
+    private void refreshScreen() {
         codigoUsuarioLoc.setText("");
         codigo.setText("");
-        
+
         btLocalizar.setEnabled(true);
         btExcluir.setEnabled(false);
         btCadastrar.setEnabled(true);
         codigoUsuarioLoc.setEnabled(true);
     }
-        
+
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         // TODO Metodo Para Cadastrar e Atualizar CLiente
-       try{
+        try {
             if (codigo.getText().equals("")) {
-                try{
-                   if (validaCamposObrigatorios()) {
-                        JOptionPane.showMessageDialog(null, "Campos para cadastro ", "Atenção",  JOptionPane.ERROR_MESSAGE);
+                try {
+                    if (validaCamposObrigatorios()) {
+                        JOptionPane.showMessageDialog(null, "Campos para cadastro ", "Atenção", JOptionPane.ERROR_MESSAGE);
                         codigoUsuarioLoc.setEnabled(false);
                         codigoUsuarioLoc.setText("");
                         btLocalizar.setEnabled(false);
                     } else {
-                        (new UsuarioService()).inserir(new Usuario(0L,jTextField1.getText(), jTextField2.getText()));
-                         jTextField1.setText("");
-                         jTextField2.setText("");
+                        (new UsuarioService()).inserir(new Usuario(0L, jTextField1.getText(), jTextField2.getText()));
+                        jTextField1.setText("");
+                        jTextField2.setText("");
+                        msgConfirm();
                     }
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null,"Houve um erro no Cadastro","Cadastro",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Houve um erro no Cadastro", "Cadastro", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                try{
+                try {
                     if (validaCamposObrigatorios()) {
-                        JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção",  JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Campos para cadastro são obrigatórios", "Atenção", JOptionPane.ERROR_MESSAGE);
                         codigoUsuarioLoc.setEnabled(false);
                         codigoUsuarioLoc.setText("");
                         btLocalizar.setEnabled(false);
                     } else {
-                        (new UsuarioService()).update(new Usuario(Long.parseLong(codigo.getText()),jTextField1.getText(),jTextField2.getText()));
-                         jTextField1.setText("");
-                         jTextField2.setText("");
+                        (new UsuarioService()).update(new Usuario(Long.parseLong(codigo.getText()), jTextField1.getText(), jTextField2.getText()));
+                        jTextField1.setText("");
+                        jTextField2.setText("");
+                        msgConfirm();
                     }
                     //JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null,"Houve um erro na alteração","Alteração",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Houve um erro na alteração", "Alteração", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","OK",JOptionPane.INFORMATION_MESSAGE);
-            refreshScreen();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Houve um erro","Atenção",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Houve um erro", "Atenção", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
-        private boolean validaCamposObrigatorios() {
-        return jTextField1.getText().equals("")||jTextField2.getText().equals("");
+    private void msgConfirm() throws HeadlessException {
+        JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "OK", JOptionPane.INFORMATION_MESSAGE);
+        refreshScreen();
     }
-        
+
+    private boolean validaCamposObrigatorios() {
+        return jTextField1.getText().equals("") || jTextField2.getText().equals("");
+    }
+
     private void btLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocalizarActionPerformed
         if (!codigoUsuarioLoc.getText().equals("")) {
             Usuario usuario = null;
@@ -309,10 +314,10 @@ public class CadastoUsuario extends javax.swing.JInternalFrame {
                 btExcluir.setEnabled(true);
             } else {
                 codigoUsuarioLoc.setText("");
-                JOptionPane.showMessageDialog(null, "Usuaári não localizado", "Atenção",  JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Usuaári não localizado", "Atenção", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Informar Código do Usuário", "Atenção",  JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Informar Código do Usuário", "Atenção", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btLocalizarActionPerformed
 
@@ -321,21 +326,20 @@ public class CadastoUsuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btRecarregarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-    
-     ListaUsuario form = null;
+
+        ListaUsuario form = null;
         try {
             form = new ListaUsuario();
-            
+
         } catch (RepositoryException ex) {
             Logger.getLogger(CadastoUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-       
-      form.setVisible(true);
-        
-        
+
+        form.setVisible(true);
+
+
     }//GEN-LAST:event_btConsultarActionPerformed
-    
+
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
